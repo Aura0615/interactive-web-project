@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  font-family: Arial, "Microsoft YaHei", sans-serif;
+  background-color: #f7f7f7;
+  color: #222;
+}
+
+.navbar {
+  padding: 20px;
+  background-color: #2f855a;
+  color: white;
+}
+
+.navbar a {
+  color: white;
+  margin-right: 16px;
+  text-decoration: none;
+}
+
+.hero {
+  padding: 40px;
+  text-align: center;
+}
+
+button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2f855a;
+  color: white;
+  cursor: pointer;
+}
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  background-color: #ddd;
+}
