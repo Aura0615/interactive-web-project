@@ -116,7 +116,7 @@
     }
     .nav-links a:hover { color: var(--amber-dark); background: rgba(184,131,91,.10); }
 
-    section { padding: 88px 0; }
+    section { padding: 88px 0; scroll-margin-top: 120px; }
     .section-kicker {
       color: var(--amber-dark);
       font-size: 12px;
@@ -343,18 +343,26 @@
 
     .cards-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 34px; }
     .insight-card {
-      min-height: 190px;
+      min-height: 170px;
       border: 1px solid var(--border);
       border-radius: 26px;
-      padding: 22px;
+      padding: 20px;
       background: rgba(255,255,255,.48);
       box-shadow: var(--shadow-card);
       transition: all .28s var(--ease);
+      cursor: pointer;
     }
-    .insight-card:hover { transform: translateY(-5px); background: rgba(255,255,255,.66); box-shadow: var(--shadow-soft); }
+    .insight-card:hover { transform: translateY(-5px); background: rgba(255,255,255,.66); border-color: rgba(123,79,54,.28); box-shadow: var(--shadow-soft); }
+    .insight-card.active { border-color: rgba(123,79,54,.46); background: rgba(255,255,255,.72); box-shadow: 0 22px 54px rgba(78,50,32,.16); }
     .insight-card .num { color: var(--gold); font-family: var(--font-display); font-size: 34px; font-style: italic; }
+    .insight-card.active .num { color: var(--amber-dark); }
     .insight-card h3 { margin: 8px 0 10px; font-family: var(--font-cn-serif); font-size: 18px; }
     .insight-card p { margin: 0; color: var(--cacao-soft); line-height: 1.8; font-size: 13px; }
+
+    #research-inputs { padding: 56px 0 68px; }
+    #research-inputs .section-title { font-size: clamp(26px, 3.2vw, 38px); letter-spacing: -.03em; }
+    #research-inputs .section-lead { max-width: 880px; }
+    #research-inputs .cards-grid { margin-top: 24px; }
 
     .panel {
       border: 1px solid var(--border);
@@ -598,7 +606,7 @@
           </span>
         </a>
         <nav class="nav-links" aria-label="页面导航">
-          <a href="#insights">报告锚点</a>
+          <a href="#research-inputs">研究锚点</a>
           <a href="#heatmap">工具热力图</a>
           <a href="#workflow">核心流程图</a>
           <a href="#network">力导向图</a>
@@ -615,6 +623,9 @@
             <div class="section-kicker">Final Roadshow Web Experience</div>
             <h1>香水香氛产品<span class="english">AI Workflow</span></h1>
             <p>围绕香水香氛产品赛道，我们将行业研究过程拆解为可视化工作流：从问题拆解、AI 辅助分析，到 Agent 执行与 Skill 输出，呈现一套更高效、可复用的研究方法。</p>
+            <div class="hero-actions">
+              <a class="btn" href="#research-inputs">进入 AI 工作流展示 →</a>
+            </div>
             <div class="meta-strip" aria-label="项目基础信息">
               <div class="meta-item"><small>报告主题</small><strong>中国香氛个护行业品牌发展与市场洞察</strong></div>
               <div class="meta-item"><small>团队</small><strong>早八点煎饼队</strong></div>
@@ -631,36 +642,35 @@
         </div>
       </section>
 
-      <section id="insights">
+      <section id="research-inputs">
         <div class="container">
-          <div class="section-kicker">Report Inputs</div>
-          <h2 class="section-title">报告内容只作为“研究输入锚点”，不做数据堆砌</h2>
-          <p class="section-lead">从 PDF 中提炼出 5 个可以支撑网页叙事的行业主题：行业边界、分类逻辑、核心消费者、差异化抓手、渠道与定价。它们用于解释 AI 为什么这样拆解工作流，不作为大段正文铺陈。</p>
+          <h2 class="section-title">执行过程概览：从研究问题到可视化交付</h2>
+          <p class="section-lead">团队把香水香氛赛道的研究任务拆解为一套可执行的 AI 工作流：先确定问题，再设计 Prompt，随后编排 Agent 与 Skill，最后形成可视化路演输出。</p>
           <div class="cards-grid">
-            <article class="insight-card">
+            <article class="insight-card active">
               <div class="num">01</div>
-              <h3>行业边界</h3>
-              <p>以香氛体验为核心，覆盖个人香水、家居香氛与香氛洗护等消费场景。</p>
+              <h3>问题拆解</h3>
+              <p>将赛题要求与香水香氛研究任务拆成可执行单元，明确 AI 需要解决什么问题。</p>
             </article>
             <article class="insight-card">
               <div class="num">02</div>
-              <h3>分类逻辑</h3>
-              <p>围绕香水、身体护理、家居香氛三类核心需求，进一步按功能、场景与用户偏好细分。</p>
+              <h3>Prompt 设计</h3>
+              <p>把开放式提问转化为带角色、输入、输出格式和校验标准的结构化指令。</p>
             </article>
             <article class="insight-card">
               <div class="num">03</div>
-              <h3>消费者路径</h3>
-              <p>核心人群可被理解为“入门尝试—进阶体验—复购与场景化使用”的成长路径。</p>
+              <h3>Agent 编排</h3>
+              <p>让智能体按步骤执行研究任务，串联资料处理、逻辑生成与结果输出。</p>
             </article>
             <article class="insight-card">
               <div class="num">04</div>
-              <h3>差异化抓手</h3>
-              <p>香味记忆、留香表现、描述可信度与试香体验，是香氛品牌从概念走向购买的关键。</p>
+              <h3>Skill 执行</h3>
+              <p>将重复性研究动作封装为可调用能力，形成更稳定、可复用的工作流。</p>
             </article>
             <article class="insight-card">
               <div class="num">05</div>
-              <h3>渠道矩阵</h3>
-              <p>内容种草、电商交易、线下试香与私域复购共同构成香氛品牌的全渠道经营逻辑。</p>
+              <h3>可视化交付</h3>
+              <p>把执行过程转化为热力图、流程图、力导向图、柱状图和演示视频，服务决赛路演展示。</p>
             </article>
           </div>
         </div>
@@ -858,6 +868,14 @@
   </div>
 
   <script>
+    const insightCards = document.querySelectorAll('#research-inputs .insight-card');
+    insightCards.forEach(card => {
+      card.addEventListener('click', () => {
+        insightCards.forEach(item => item.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+
     const flowNodes = document.querySelectorAll('.flow-node');
     const detail = {
       title: document.getElementById('detail-title'),
