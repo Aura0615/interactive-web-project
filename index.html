@@ -539,7 +539,13 @@
     .skill-card p { color: var(--cacao-soft); line-height: 1.65; margin: 0; font-size: 13px; }
     .skill-card .chip { display: inline-flex; margin-bottom: 12px; padding: 6px 10px; border-radius: 999px; background: rgba(135,148,110,.16); color: var(--sage-dark); font-weight: 800; font-size: 12px; }
 
-    .evidence-grid { margin-top: 24px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; }
+    .proof-grid { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .proof-card { min-height: 180px; }
+    .evidence-video-wrap { max-width: 900px; margin: 24px auto 0; }
+    .summary-grid { margin-top: 24px; display: grid; grid-template-columns: 1fr .9fr; gap: 18px; align-items: stretch; }
+    .summary-stack { display: grid; gap: 12px; }
+    .conclusion-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .conclusion-chip { padding: 9px 12px; border-radius: 999px; background: rgba(135,148,110,.16); color: var(--sage-dark); font-size: 12px; font-weight: 800; }
     .video-shell {
       border-radius: 34px;
       overflow: hidden;
@@ -555,6 +561,7 @@
       text-align: center;
       box-shadow: var(--shadow-soft);
     }
+    .video-shell.large { min-height: 420px; }
     .play-circle { width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(255,255,255,.55); display: grid; place-items:center; margin: 0 auto 12px; background: rgba(255,255,255,.12); }
     .play-circle::before { content: ""; border-left: 18px solid var(--ivory); border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
     .video-shell h3 { margin: 0; font-family: var(--font-cn-serif); font-size: 24px; }
@@ -575,7 +582,7 @@
     footer { padding: 44px 0 60px; color: var(--cacao-soft); font-size: 13px; text-align: center; }
 
     @media (max-width: 980px) {
-      .hero-grid, .workflow-grid, .network-wrap, .agent-layout, .evidence-grid { grid-template-columns: 1fr; }
+      .hero-grid, .workflow-grid, .network-wrap, .agent-layout, .proof-grid, .summary-grid { grid-template-columns: 1fr; }
       .cards-grid { grid-template-columns: repeat(2, 1fr); }
       .skill-grid { grid-template-columns: 1fr; }
       .flow { grid-template-columns: repeat(2, 1fr); }
@@ -829,18 +836,50 @@
 
       <section id="evidence">
         <div class="container">
-          <div class="section-kicker">Proof & Demo</div>
-          <h2 class="section-title">视频、对话记录、调试与效率示意</h2>
-          <p class="section-lead">这部分不做大段展示，只作为“过程真实发生过”的证据。Prompt 只放一个方法型案例，不放去 AI 味、网页制作或普通润色 Prompt。</p>
-          <div class="evidence-grid">
-            <div class="video-shell">
+          <div class="section-kicker">PROOF & DEMO 01</div>
+          <h2 class="section-title">视频、对话记录与调试证据</h2>
+          <p class="section-lead">这部分不展示完整聊天记录或大段 Prompt，只保留能证明“过程真实发生过”的关键证据：一次方法型 Prompt 迭代、一条失败到成功的调试记录，以及一段 AI 工作流运行视频。</p>
+          <div class="proof-grid">
+            <article class="mini-card proof-card">
+              <h3>Prompt 迭代证据</h3>
+              <p>展示从“普通提问”到“结构化 Prompt”的一次代表性变化，用来证明 AI 使用方法经过设计，而不是简单问答。</p>
+            </article>
+            <article class="mini-card proof-card">
+              <h3>调试记录证据</h3>
+              <p>保留一条“失败 → 调整 → 成功”的记录，说明 Agent / Skill 执行过程经过测试和修正。</p>
+            </article>
+            <article class="mini-card proof-card">
+              <h3>视频运行证据</h3>
+              <p>用短视频展示从输入任务到 Agent / Skill 输出的过程，作为路演现场的动态证明。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="evidence-video">
+        <div class="container">
+          <div class="section-kicker">PROOF & DEMO 02</div>
+          <h2 class="section-title">AI 工作流运行视频</h2>
+          <p class="section-lead">视频用于展示执行过程，而不是替代讲解。正式版本中可替换为 AI 工作流运行视频或 Agent / Skill 执行视频。</p>
+          <div class="evidence-video-wrap">
+            <div class="video-shell large">
               <div>
                 <div class="play-circle" aria-hidden="true"></div>
                 <h3>AI 工作流运行视频</h3>
-                <p>占位文件：video_workflow_demo.mp4 / video_agent_skill_run.mp4。正式版本可点击播放，展示从输入任务到 Agent/Skill 输出的过程。</p>
+                <p>占位文件：<br />video_workflow_demo.mp4 / video_agent_skill_run.mp4</p>
               </div>
             </div>
-            <div>
+          </div>
+        </div>
+      </section>
+
+      <section id="evidence-summary">
+        <div class="container">
+          <div class="section-kicker">PROOF & DEMO 03</div>
+          <h2 class="section-title">方法价值总结</h2>
+          <p class="section-lead">最终展示的不是材料数量，而是 AI 工作流带来的结构化、复用性和可视化效率。</p>
+          <div class="summary-grid">
+            <div class="summary-stack">
               <article class="mini-card">
                 <h3>Prompt 迭代案例</h3>
                 <p>展示“普通提问 → 结构化 Prompt”的一次代表性变化，用来证明 AI 使用方法，而不是展示所有对话。</p>
@@ -853,17 +892,22 @@
                 <h3>调试记录卡片</h3>
                 <p>只保留一条“失败—调整—成功”的记录，例如 Skill 输出过泛后，补充输入格式和校验标准，最终生成可展示结构。</p>
               </article>
-              <article class="mini-card">
-                <h3>效率提升柱状图</h3>
-                <p>示意估算，不作为精确数据；用于说明 AI 对研究流程结构化和可视化环节的提效。</p>
-                <div class="bars" aria-label="效率提升柱状图">
-                  <div class="bar-row"><span>研究框架</span><div class="bar-track"><div class="bar" style="width:72%"></div></div><strong>72%</strong></div>
-                  <div class="bar-row"><span>资料结构化</span><div class="bar-track"><div class="bar" style="width:64%"></div></div><strong>64%</strong></div>
-                  <div class="bar-row"><span>可视化生成</span><div class="bar-track"><div class="bar" style="width:81%"></div></div><strong>81%</strong></div>
-                  <div class="bar-row"><span>路演整合</span><div class="bar-track"><div class="bar" style="width:58%"></div></div><strong>58%</strong></div>
-                </div>
-              </article>
             </div>
+            <article class="mini-card">
+              <h3>效率提升柱状图</h3>
+              <p>示意估算，不作为精确数据；用于说明 AI 对研究流程结构化和可视化环节的提效。</p>
+              <div class="bars" aria-label="效率提升柱状图">
+                <div class="bar-row"><span>研究框架</span><div class="bar-track"><div class="bar" style="width:72%"></div></div><strong>72%</strong></div>
+                <div class="bar-row"><span>资料结构化</span><div class="bar-track"><div class="bar" style="width:64%"></div></div><strong>64%</strong></div>
+                <div class="bar-row"><span>可视化生成</span><div class="bar-track"><div class="bar" style="width:81%"></div></div><strong>81%</strong></div>
+                <div class="bar-row"><span>路演整合</span><div class="bar-track"><div class="bar" style="width:58%"></div></div><strong>58%</strong></div>
+              </div>
+              <div class="conclusion-chips" aria-label="方法价值总结">
+                <span class="conclusion-chip">结构化：把开放问题拆成可执行步骤</span>
+                <span class="conclusion-chip">可复用：把重复研究动作沉淀为 Skill</span>
+                <span class="conclusion-chip">可展示：把执行过程转化为图表与视频证据</span>
+              </div>
+            </article>
           </div>
         </div>
       </section>
