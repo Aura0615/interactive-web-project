@@ -1,32 +1,911 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>交互式网页项目</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>香水香氛产品｜AI 工作流决赛展示</title>
+  <style>
+    :root {
+      --ivory: #FBF7EF;
+      --cream: #F3E9D9;
+      --sand: #DFC8AA;
+      --linen: #EFE1CF;
+      --amber: #B8835B;
+      --amber-dark: #7B4F36;
+      --sage: #87946E;
+      --sage-dark: #566344;
+      --rose: #D4A092;
+      --gold: #B89B63;
+      --cacao: #3B2B24;
+      --cacao-soft: #6E5A4A;
+      --white: rgba(255,255,255,0.72);
+      --shadow-soft: 0 24px 70px rgba(78, 50, 32, 0.12);
+      --shadow-card: 0 18px 45px rgba(78, 50, 32, 0.10);
+      --border: rgba(123, 79, 54, 0.16);
+      --font-display: "Cormorant Garamond", "Times New Roman", "Noto Serif SC", "Songti SC", serif;
+      --font-cn-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+      --font-body: "Avenir Next", "Inter", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --ease: cubic-bezier(.22,.8,.24,1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--cacao);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(212,160,146,.30), transparent 30%),
+        radial-gradient(circle at 88% 18%, rgba(184,155,99,.22), transparent 28%),
+        linear-gradient(135deg, #FBF7EF 0%, #F4E8D8 42%, #EFE1CF 100%);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(123,79,54,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(123,79,54,.05) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), transparent 72%);
+      z-index: 0;
+    }
+
+    .page { position: relative; z-index: 1; }
+    .container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(251,247,239,.72);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--cacao);
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 42% 35%, rgba(255,255,255,.9), transparent 22%),
+        linear-gradient(145deg, var(--amber), var(--rose));
+      box-shadow: 0 10px 26px rgba(184,131,91,.32);
+    }
+
+    .brand strong {
+      display: block;
+      font-family: var(--font-cn-serif);
+      letter-spacing: .04em;
+      font-size: 15px;
+    }
+
+    .brand span {
+      display: block;
+      font-size: 11px;
+      color: var(--cacao-soft);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--cacao-soft);
+      font-size: 13px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      transition: all .25s var(--ease);
+    }
+    .nav-links a:hover { color: var(--amber-dark); background: rgba(184,131,91,.10); }
+
+    section { padding: 88px 0; }
+    .section-kicker {
+      color: var(--amber-dark);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 13px;
+    }
+    .section-title {
+      margin: 0;
+      font-family: var(--font-cn-serif);
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.18;
+      letter-spacing: -.04em;
+      color: var(--cacao);
+    }
+    .section-lead {
+      margin: 16px 0 0;
+      max-width: 780px;
+      line-height: 1.9;
+      color: var(--cacao-soft);
+      font-size: 15px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 68px);
+      display: grid;
+      align-items: center;
+      padding: 78px 0 54px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.06fr .94fr;
+      align-items: center;
+      gap: 56px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-cn-serif);
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: 1.02;
+      margin: 0;
+      letter-spacing: -.07em;
+      color: var(--cacao);
+    }
+
+    .hero .english {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(44px, 8vw, 94px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--amber-dark);
+      letter-spacing: -.04em;
+      margin-top: 8px;
+    }
+
+    .hero p {
+      color: var(--cacao-soft);
+      line-height: 1.9;
+      font-size: 17px;
+      max-width: 640px;
+      margin: 22px 0 0;
+    }
+
+    .hero-actions { display: flex; align-items: center; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 13px 20px;
+      text-decoration: none;
+      color: var(--ivory);
+      background: var(--amber-dark);
+      box-shadow: 0 15px 30px rgba(123,79,54,.22);
+      font-weight: 700;
+      font-size: 14px;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+    }
+    .btn:hover { transform: translateY(-2px); background: var(--cacao); box-shadow: 0 18px 38px rgba(123,79,54,.28); }
+    .btn.secondary {
+      color: var(--amber-dark);
+      background: rgba(255,255,255,.42);
+      border-color: var(--border);
+      box-shadow: none;
+    }
+    .btn.secondary:hover { color: var(--cacao); background: rgba(255,255,255,.72); }
+
+    .hero-card {
+      position: relative;
+      min-height: 520px;
+      border-radius: 42px;
+      padding: 34px;
+      background: linear-gradient(145deg, rgba(255,255,255,.60), rgba(255,255,255,.24));
+      border: 1px solid rgba(255,255,255,.70);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,131,91,.34), transparent 66%);
+      right: -92px;
+      top: -92px;
+      animation: pulse 6s ease-in-out infinite;
+    }
+
+    .bottle {
+      position: absolute;
+      width: 230px;
+      height: 360px;
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+      border-radius: 42px 42px 58px 58px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.78), rgba(255,255,255,.18) 36%, rgba(184,131,91,.22) 74%, rgba(255,255,255,.54)),
+        linear-gradient(180deg, rgba(255,255,255,.42), rgba(184,131,91,.28));
+      border: 1px solid rgba(255,255,255,.82);
+      box-shadow: inset 0 0 32px rgba(255,255,255,.36), 0 35px 70px rgba(90,56,36,.18);
+    }
+    .bottle::before {
+      content: "";
+      position: absolute;
+      width: 84px;
+      height: 58px;
+      border-radius: 18px 18px 10px 10px;
+      top: -58px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(123,79,54,.65), rgba(184,131,91,.42));
+      border: 1px solid rgba(255,255,255,.45);
+    }
+    .bottle::after {
+      content: "香氛研究\A AI WORKFLOW";
+      white-space: pre;
+      position: absolute;
+      inset: 112px 30px auto;
+      min-height: 110px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-top: 1px solid rgba(123,79,54,.22);
+      border-bottom: 1px solid rgba(123,79,54,.22);
+      color: var(--amber-dark);
+      font-family: var(--font-display);
+      font-size: 25px;
+      line-height: 1.35;
+      letter-spacing: .03em;
+    }
+
+    .note {
+      position: absolute;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,.56);
+      border: 1px solid rgba(255,255,255,.78);
+      box-shadow: 0 12px 28px rgba(78,50,32,.10);
+      color: var(--cacao-soft);
+      font-size: 13px;
+      backdrop-filter: blur(12px);
+      animation: float 6s ease-in-out infinite;
+    }
+    .note:nth-child(2) { top: 64px; left: 34px; animation-delay: 0s; }
+    .note:nth-child(3) { top: 124px; right: 30px; animation-delay: -1.4s; }
+    .note:nth-child(4) { bottom: 96px; left: 42px; animation-delay: -2.6s; }
+    .note:nth-child(5) { bottom: 42px; right: 44px; animation-delay: -3.8s; }
+
+    @keyframes pulse { 0%,100% { transform: scale(.95); opacity:.75; } 50% { transform: scale(1.08); opacity:1; } }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+    .meta-strip {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      background: rgba(255,255,255,.40);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .meta-item { padding: 18px 20px; border-right: 1px solid var(--border); }
+    .meta-item:last-child { border-right: 0; }
+    .meta-item small { display: block; color: var(--cacao-soft); margin-bottom: 6px; }
+    .meta-item strong { font-family: var(--font-cn-serif); font-size: 15px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 34px; }
+    .insight-card {
+      min-height: 190px;
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 22px;
+      background: rgba(255,255,255,.48);
+      box-shadow: var(--shadow-card);
+      transition: all .28s var(--ease);
+    }
+    .insight-card:hover { transform: translateY(-5px); background: rgba(255,255,255,.66); box-shadow: var(--shadow-soft); }
+    .insight-card .num { color: var(--gold); font-family: var(--font-display); font-size: 34px; font-style: italic; }
+    .insight-card h3 { margin: 8px 0 10px; font-family: var(--font-cn-serif); font-size: 18px; }
+    .insight-card p { margin: 0; color: var(--cacao-soft); line-height: 1.8; font-size: 13px; }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      background: rgba(255,255,255,.50);
+      box-shadow: var(--shadow-card);
+      padding: 28px;
+    }
+
+    .heatmap-wrap { margin-top: 32px; overflow-x: auto; }
+    .heatmap {
+      min-width: 820px;
+      display: grid;
+      grid-template-columns: 180px repeat(5, 1fr);
+      gap: 8px;
+      align-items: stretch;
+    }
+    .heat-cell, .heat-head, .tool-name {
+      border-radius: 16px;
+      padding: 14px 12px;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 13px;
+      border: 1px solid rgba(123,79,54,.10);
+    }
+    .heat-head { background: rgba(123,79,54,.08); color: var(--amber-dark); font-weight: 700; }
+    .tool-name { justify-content: flex-start; font-weight: 700; color: var(--cacao); background: rgba(255,255,255,.45); }
+    .heat-cell { font-weight: 800; color: var(--cacao); cursor: default; transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+    .heat-cell:hover { transform: scale(1.04); box-shadow: 0 12px 24px rgba(78,50,32,.10); }
+    .i0 { background: rgba(123,79,54,.05); color: rgba(59,43,36,.38); }
+    .i1 { background: rgba(212,160,146,.26); }
+    .i2 { background: rgba(184,131,91,.38); }
+    .i3 { background: rgba(123,79,54,.72); color: var(--ivory); }
+    .legend { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 18px; color: var(--cacao-soft); font-size: 13px; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .swatch { width: 18px; height: 18px; border-radius: 6px; display: inline-block; border: 1px solid rgba(123,79,54,.10); }
+
+    .workflow-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 24px; align-items: stretch; margin-top: 34px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      position: relative;
+    }
+    .flow-node {
+      position: relative;
+      padding: 20px;
+      min-height: 150px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.45);
+      cursor: pointer;
+      transition: all .25s var(--ease);
+      overflow: hidden;
+    }
+    .flow-node::after {
+      content: "";
+      position: absolute;
+      width: 90px; height: 90px;
+      right: -40px; bottom: -42px;
+      border-radius: 50%;
+      background: rgba(184,131,91,.16);
+      transition: transform .25s var(--ease);
+    }
+    .flow-node:hover, .flow-node.active { transform: translateY(-5px); background: rgba(255,255,255,.70); box-shadow: var(--shadow-card); border-color: rgba(123,79,54,.32); }
+    .flow-node:hover::after, .flow-node.active::after { transform: scale(1.3); }
+    .flow-node small { color: var(--gold); font-family: var(--font-display); font-size: 28px; font-style: italic; }
+    .flow-node h3 { margin: 6px 0 8px; font-family: var(--font-cn-serif); font-size: 18px; }
+    .flow-node p { margin: 0; color: var(--cacao-soft); font-size: 13px; line-height: 1.75; }
+    .detail-panel { min-height: 320px; display: flex; flex-direction: column; gap: 18px; }
+    .detail-panel h3 { margin: 0; font-family: var(--font-cn-serif); font-size: 26px; }
+    .detail-panel p { margin: 0; line-height: 1.85; color: var(--cacao-soft); }
+    .detail-list { display: grid; gap: 10px; }
+    .detail-list div {
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(123,79,54,.07);
+      color: var(--cacao-soft);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .detail-list strong { color: var(--amber-dark); }
+
+    .network-wrap {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .network {
+      position: relative;
+      min-height: 520px;
+      border-radius: 34px;
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(184,131,91,.11), transparent 46%),
+        rgba(255,255,255,.42);
+      overflow: hidden;
+    }
+    .network svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .edge { stroke: rgba(123,79,54,.24); stroke-width: 1.4; transition: all .25s var(--ease); }
+    .edge.hot { stroke: rgba(123,79,54,.75); stroke-width: 2.6; }
+    .node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,.72);
+      background: rgba(255,255,255,.64);
+      box-shadow: 0 13px 30px rgba(78,50,32,.11);
+      color: var(--cacao);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .25s var(--ease);
+      white-space: nowrap;
+    }
+    .node.tool { background: rgba(123,79,54,.80); color: var(--ivory); }
+    .node.task { background: rgba(135,148,110,.72); color: var(--ivory); }
+    .node.output { background: rgba(184,155,99,.70); color: var(--cacao); }
+    .node.dimmed { opacity: .28; filter: grayscale(.5); }
+    .node.hot { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 18px 42px rgba(78,50,32,.18); }
+    .network-side h3 { margin: 0 0 12px; font-family: var(--font-cn-serif); font-size: 24px; }
+    .network-side p { margin: 0 0 18px; line-height: 1.8; color: var(--cacao-soft); font-size: 14px; }
+    .tag-list { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tag { padding: 8px 11px; border-radius: 999px; background: rgba(123,79,54,.08); color: var(--amber-dark); font-size: 12px; font-weight: 700; }
+
+    .agent-layout { margin-top: 34px; display: grid; grid-template-columns: .95fr 1.05fr; gap: 24px; }
+    .agent-card {
+      min-height: 470px;
+      border-radius: 34px;
+      padding: 30px;
+      background:
+        linear-gradient(145deg, rgba(59,43,36,.88), rgba(123,79,54,.78)),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M0 120 C 55 88, 90 160, 200 104" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2"/></svg>');
+      color: var(--ivory);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+    .agent-card h3 { margin: 0; font-family: var(--font-cn-serif); font-size: 31px; }
+    .agent-card p { color: rgba(251,247,239,.78); line-height: 1.9; }
+    .agent-steps { display: grid; gap: 12px; margin-top: 24px; }
+    .agent-step {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      font-size: 14px;
+    }
+    .skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .skill-card {
+      border-radius: 28px;
+      padding: 22px;
+      background: rgba(255,255,255,.52);
+      border: 1px solid var(--border);
+      min-height: 270px;
+      box-shadow: var(--shadow-card);
+      transition: transform .25s var(--ease);
+    }
+    .skill-card:hover { transform: translateY(-5px); }
+    .skill-card h3 { margin: 0 0 12px; font-family: var(--font-cn-serif); font-size: 19px; }
+    .skill-card p { color: var(--cacao-soft); line-height: 1.8; margin: 0; font-size: 13px; }
+    .skill-card .chip { display: inline-flex; margin-bottom: 16px; padding: 6px 10px; border-radius: 999px; background: rgba(135,148,110,.16); color: var(--sage-dark); font-weight: 800; font-size: 12px; }
+
+    .evidence-grid { margin-top: 34px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; }
+    .video-shell {
+      border-radius: 34px;
+      overflow: hidden;
+      min-height: 390px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(135deg, rgba(59,43,36,.72), rgba(184,131,91,.42)),
+        radial-gradient(circle at 65% 28%, rgba(255,255,255,.22), transparent 38%);
+      position: relative;
+      color: var(--ivory);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+    }
+    .play-circle { width: 78px; height: 78px; border-radius: 50%; border: 1px solid rgba(255,255,255,.55); display: grid; place-items:center; margin: 0 auto 16px; background: rgba(255,255,255,.12); }
+    .play-circle::before { content: ""; border-left: 18px solid var(--ivory); border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
+    .video-shell h3 { margin: 0; font-family: var(--font-cn-serif); font-size: 26px; }
+    .video-shell p { color: rgba(251,247,239,.76); line-height: 1.8; max-width: 560px; margin: 12px auto 0; }
+
+    .mini-card { border-radius: 26px; padding: 22px; background: rgba(255,255,255,.52); border: 1px solid var(--border); margin-bottom: 14px; }
+    .mini-card h3 { margin: 0 0 10px; font-family: var(--font-cn-serif); font-size: 20px; }
+    .mini-card p { margin: 0; color: var(--cacao-soft); line-height: 1.8; font-size: 13px; }
+    .prompt-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    .prompt-box { padding: 14px; border-radius: 18px; background: rgba(123,79,54,.07); font-size: 12px; color: var(--cacao-soft); line-height: 1.65; }
+    .prompt-box strong { display:block; color: var(--amber-dark); margin-bottom: 6px; }
+
+    .bars { display: grid; gap: 12px; margin-top: 18px; }
+    .bar-row { display: grid; grid-template-columns: 126px 1fr 42px; gap: 12px; align-items: center; font-size: 13px; color: var(--cacao-soft); }
+    .bar-track { height: 13px; border-radius: 999px; background: rgba(123,79,54,.08); overflow: hidden; }
+    .bar { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--sage), var(--amber)); }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .route-step {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      background: rgba(255,255,255,.44);
+      min-height: 124px;
+    }
+    .route-step small { color: var(--gold); font-weight: 900; }
+    .route-step h3 { margin: 8px 0; font-family: var(--font-cn-serif); font-size: 17px; }
+    .route-step p { margin: 0; color: var(--cacao-soft); font-size: 12px; line-height: 1.7; }
+
+    footer { padding: 44px 0 60px; color: var(--cacao-soft); font-size: 13px; text-align: center; }
+
+    @media (max-width: 980px) {
+      .hero-grid, .workflow-grid, .network-wrap, .agent-layout, .evidence-grid { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .skill-grid, .route { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: repeat(2, 1fr); }
+      .hero-card { min-height: 420px; }
+      .nav { height: auto; padding: 14px 0; align-items: flex-start; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 620px) {
+      .container { width: min(100% - 28px, 1180px); }
+      section { padding: 64px 0; }
+      .hero h1 { font-size: 42px; }
+      .hero .english { font-size: 44px; }
+      .meta-strip, .cards-grid, .flow, .prompt-split { grid-template-columns: 1fr; }
+      .meta-item { border-right: 0; border-bottom: 1px solid var(--border); }
+      .meta-item:last-child { border-bottom: 0; }
+      .hero-card { min-height: 380px; padding: 24px; }
+      .bottle { width: 184px; height: 292px; }
+    }
+  </style>
 </head>
 <body>
-  <header class="navbar">
-    <h1>我们的网页项目</h1>
-    <nav>
-      <a href="#">首页</a>
-      <a href="#">功能</a>
-      <a href="#">关于我们</a>
-    </nav>
-  </header>
+  <div class="page">
+    <header>
+      <div class="container nav">
+        <a class="brand" href="#top" aria-label="返回顶部">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>
+            <strong>香氛个护 × AI 工作流</strong>
+            <span>Fragrance Insight System</span>
+          </span>
+        </a>
+        <nav class="nav-links" aria-label="页面导航">
+          <a href="#insights">报告锚点</a>
+          <a href="#heatmap">工具热力图</a>
+          <a href="#workflow">核心流程图</a>
+          <a href="#network">力导向图</a>
+          <a href="#agent">Agent / Skills</a>
+          <a href="#evidence">证据与演示</a>
+        </nav>
+      </div>
+    </header>
 
-  <main>
-    <section class="hero">
-      <h2>欢迎来到我们的交互式网页</h2>
-      <p>这里将展示我们一起完成的网页内容。</p>
-      <button id="helloBtn">点击我</button>
-    </section>
-  </main>
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="section-kicker">Final Roadshow Web Experience</div>
+            <h1>香水香氛产品<span class="english">AI Workflow</span></h1>
+            <p>以《中国香氛个护行业品牌发展与市场洞察报告》为输入资产，将行业研究拆解为 Prompt、Agent、Skill 与可视化输出四类工作流能力，用 5 分钟展示研究方法的创新，而不是堆叠原始数据。</p>
+            <div class="hero-actions">
+              <a class="btn" href="#heatmap">开始查看工作流 →</a>
+              <a class="btn secondary" href="#route">5 分钟路演动线</a>
+            </div>
+            <div class="meta-strip" aria-label="项目基础信息">
+              <div class="meta-item"><small>报告主题</small><strong>中国香氛个护行业品牌发展与市场洞察</strong></div>
+              <div class="meta-item"><small>团队</small><strong>早八点就钟队</strong></div>
+              <div class="meta-item"><small>展示重点</small><strong>AI 使用方法与工作流创新</strong></div>
+            </div>
+          </div>
+          <div class="hero-card" aria-label="香氛主题视觉">
+            <span class="note">Top Note · 香气体验</span>
+            <span class="note">Heart Note · 品牌洞察</span>
+            <span class="note">Base Note · Agent 执行</span>
+            <span class="note">Final Note · 路演输出</span>
+            <div class="bottle" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
 
-  <footer class="footer">
-    <p>© 2026 A 和 B 的网页项目</p>
-  </footer>
+      <section id="insights">
+        <div class="container">
+          <div class="section-kicker">Report Inputs</div>
+          <h2 class="section-title">报告内容只作为“研究输入锚点”，不做数据堆砌</h2>
+          <p class="section-lead">从 PDF 中提炼出 5 个可以支撑网页叙事的行业主题：行业边界、分类逻辑、核心消费者、差异化抓手、渠道与定价。它们用于解释 AI 为什么这样拆解工作流，不作为大段正文铺陈。</p>
+          <div class="cards-grid">
+            <article class="insight-card">
+              <div class="num">01</div>
+              <h3>行业边界</h3>
+              <p>以香氛体验为核心，覆盖个人香水、家居香氛与香氛洗护等消费场景。</p>
+            </article>
+            <article class="insight-card">
+              <div class="num">02</div>
+              <h3>分类逻辑</h3>
+              <p>围绕香水、身体护理、家居香氛三类核心需求，进一步按功能、场景与用户偏好细分。</p>
+            </article>
+            <article class="insight-card">
+              <div class="num">03</div>
+              <h3>消费者路径</h3>
+              <p>核心人群可被理解为“入门尝试—进阶体验—复购与场景化使用”的成长路径。</p>
+            </article>
+            <article class="insight-card">
+              <div class="num">04</div>
+              <h3>差异化抓手</h3>
+              <p>香味记忆、留香表现、描述可信度与试香体验，是香氛品牌从概念走向购买的关键。</p>
+            </article>
+            <article class="insight-card">
+              <div class="num">05</div>
+              <h3>渠道矩阵</h3>
+              <p>内容种草、电商交易、线下试香与私域复购共同构成香氛品牌的全渠道经营逻辑。</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-  <script src="script.js"></script>
+      <section id="heatmap">
+        <div class="container">
+          <div class="section-kicker">Method Map 01</div>
+          <h2 class="section-title">AI 工具热力图</h2>
+          <p class="section-lead">用一张热力图解释“多工具如何分工”。正式版本中，同学只需要补充每个工具在 5 个阶段的 0–3 分参与强度。</p>
+          <div class="panel heatmap-wrap">
+            <div class="heatmap" aria-label="AI 工具热力图">
+              <div></div>
+              <div class="heat-head">赛题理解与问题拆解</div>
+              <div class="heat-head">方法论与 Prompt 设计</div>
+              <div class="heat-head">Agent 编排</div>
+              <div class="heat-head">Skill 执行</div>
+              <div class="heat-head">可视化输出与人工校验</div>
+
+              <div class="tool-name">ChatGPT</div><div class="heat-cell i3">3</div><div class="heat-cell i3">3</div><div class="heat-cell i2">2</div><div class="heat-cell i1">1</div><div class="heat-cell i2">2</div>
+              <div class="tool-name">DeepSeek</div><div class="heat-cell i2">2</div><div class="heat-cell i2">2</div><div class="heat-cell i1">1</div><div class="heat-cell i1">1</div><div class="heat-cell i1">1</div>
+              <div class="tool-name">阿里云百炼</div><div class="heat-cell i0">0</div><div class="heat-cell i1">1</div><div class="heat-cell i3">3</div><div class="heat-cell i2">2</div><div class="heat-cell i1">1</div>
+              <div class="tool-name">OpenClaw</div><div class="heat-cell i0">0</div><div class="heat-cell i0">0</div><div class="heat-cell i2">2</div><div class="heat-cell i3">3</div><div class="heat-cell i1">1</div>
+              <div class="tool-name">高级数据分析</div><div class="heat-cell i1">1</div><div class="heat-cell i1">1</div><div class="heat-cell i0">0</div><div class="heat-cell i1">1</div><div class="heat-cell i3">3</div>
+              <div class="tool-name">ProcessOn / 可视化</div><div class="heat-cell i0">0</div><div class="heat-cell i1">1</div><div class="heat-cell i1">1</div><div class="heat-cell i0">0</div><div class="heat-cell i3">3</div>
+            </div>
+            <div class="legend">
+              <span><i class="swatch i0"></i>0 未使用</span>
+              <span><i class="swatch i1"></i>1 辅助</span>
+              <span><i class="swatch i2"></i>2 主要</span>
+              <span><i class="swatch i3"></i>3 核心</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflow">
+        <div class="container">
+          <div class="section-kicker">Method Map 02</div>
+          <h2 class="section-title">核心 AI 工作流流程图</h2>
+          <p class="section-lead">这里是 5 分钟展示的主线。点击每个节点，右侧只显示“AI 怎么用、产出是什么、人工如何把关”，避免变成资料库。</p>
+          <div class="workflow-grid">
+            <div class="flow" role="list" aria-label="核心 AI 工作流">
+              <article class="flow-node active" data-title="赛题输入" data-desc="把赛题要求、报告主题和已有资料转化为 AI 可处理的任务输入。" data-ai="将 PDF 报告、赛道要求、路演目标整理成统一任务上下文。" data-output="AI 工作流的起始任务包。" data-human="明确哪些内容进入网页，哪些只保留在论文或 PPT 中。"><small>01</small><h3>赛题输入</h3><p>从报告和路演目标开始，而不是直接让 AI 写结论。</p></article>
+              <article class="flow-node" data-title="问题拆解" data-desc="将香氛行业研究拆成行业边界、消费者、差异化、渠道与品牌机会。" data-ai="用 AI 做 MECE 拆解，生成适合路演的研究问题结构。" data-output="5 个报告锚点与 6 个工作流节点。" data-human="压缩过细数据，保留能体现方法创新的内容。"><small>02</small><h3>问题拆解</h3><p>把复杂研究从“资料集合”拆成可展示的逻辑路径。</p></article>
+              <article class="flow-node" data-title="Prompt 结构化" data-desc="把开放式提问转化为角色、任务、输入、输出、校验标准明确的指令。" data-ai="用结构化 Prompt 让 AI 输出可复用框架，而不是一次性答案。" data-output="研究框架 Prompt、Agent 编排 Prompt、Skill 转化 Prompt。" data-human="检查 Prompt 是否过泛、是否偏离比赛展示目标。"><small>03</small><h3>Prompt 结构化</h3><p>展示 AI 使用方法，而不是展示润色或去 AI 味过程。</p></article>
+              <article class="flow-node" data-title="Agent 编排" data-desc="将研究任务编排成可执行流程，让不同 Skill 承接不同环节。" data-ai="在智能体平台内配置任务顺序、输入输出和调用逻辑。" data-output="行业研究执行 Agent 的编排结构。" data-human="判断每个节点是否必要，避免过度自动化。"><small>04</small><h3>Agent 编排</h3><p>把研究方法转化为可运行的智能体流程。</p></article>
+              <article class="flow-node" data-title="Skill 执行" data-desc="用 Skill 承接框架提炼、洞察抽取和可视化转译。" data-ai="调用 Research Framework、Insight Extraction、Visualization 等 Skill。" data-output="结构化研究框架、洞察摘要、图表草图。" data-human="校验输出是否符合香氛行业逻辑和路演语境。"><small>05</small><h3>Skill 执行</h3><p>用输入—处理—输出证明 AI 工作流可以落地。</p></article>
+              <article class="flow-node" data-title="人工校验与路演输出" data-desc="将 AI 输出压缩成 5 分钟路演可讲清楚的页面。" data-ai="辅助生成流程图、热力图、力导向图、柱状图和展示文案。" data-output="最终 PPT 跳转网页、演示视频、证据卡片。" data-human="决定叙事顺序、现场点击路径和最终表达。"><small>06</small><h3>人工校验与路演输出</h3><p>保留人对判断、取舍和表达的控制权。</p></article>
+            </div>
+            <aside class="panel detail-panel" aria-live="polite">
+              <h3 id="detail-title">赛题输入</h3>
+              <p id="detail-desc">把赛题要求、报告主题和已有资料转化为 AI 可处理的任务输入。</p>
+              <div class="detail-list">
+                <div><strong>AI 如何参与：</strong><span id="detail-ai">将 PDF 报告、赛道要求、路演目标整理成统一任务上下文。</span></div>
+                <div><strong>产出物：</strong><span id="detail-output">AI 工作流的起始任务包。</span></div>
+                <div><strong>人工把关：</strong><span id="detail-human">明确哪些内容进入网页，哪些只保留在论文或 PPT 中。</span></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="network">
+        <div class="container">
+          <div class="section-kicker">Method Map 03</div>
+          <h2 class="section-title">工具—任务—成果力导向图</h2>
+          <p class="section-lead">这部分承担“眼前一亮”的视觉任务：把 AI 工具、研究任务和最终成果做成协作网络。正式版本将根据同学提交的关系数据替换节点和连线。</p>
+          <div class="network-wrap">
+            <div class="network" id="networkCanvas" aria-label="工具任务成果关系图">
+              <svg viewBox="0 0 1000 620" preserveAspectRatio="none" aria-hidden="true">
+                <line class="edge" data-link="ChatGPT-问题拆解" x1="170" y1="120" x2="430" y2="135" />
+                <line class="edge" data-link="ChatGPT-Prompt结构化" x1="170" y1="120" x2="486" y2="260" />
+                <line class="edge" data-link="阿里云百炼-Agent编排" x1="180" y1="440" x2="520" y2="390" />
+                <line class="edge" data-link="OpenClaw-Skill执行" x1="315" y1="530" x2="665" y2="350" />
+                <line class="edge" data-link="高级数据分析-可视化输出" x1="285" y1="220" x2="715" y2="185" />
+                <line class="edge" data-link="问题拆解-工作流图" x1="430" y1="135" x2="820" y2="100" />
+                <line class="edge" data-link="Prompt结构化-Prompt模板" x1="486" y1="260" x2="840" y2="265" />
+                <line class="edge" data-link="Skill执行-Skill成果" x1="665" y1="350" x2="865" y2="410" />
+                <line class="edge" data-link="可视化输出-路演网页" x1="715" y1="185" x2="850" y2="545" />
+                <line class="edge" data-link="Agent编排-Skill执行" x1="520" y1="390" x2="665" y2="350" />
+              </svg>
+              <button class="node tool" data-node="ChatGPT" style="left:17%; top:19%;">ChatGPT</button>
+              <button class="node tool" data-node="高级数据分析" style="left:28.5%; top:35.5%;">高级数据分析</button>
+              <button class="node tool" data-node="阿里云百炼" style="left:18%; top:71%;">阿里云百炼</button>
+              <button class="node tool" data-node="OpenClaw" style="left:31.5%; top:85%;">OpenClaw</button>
+              <button class="node task" data-node="问题拆解" style="left:43%; top:22%;">问题拆解</button>
+              <button class="node task" data-node="Prompt结构化" style="left:48.6%; top:42%;">Prompt 结构化</button>
+              <button class="node task" data-node="Agent编排" style="left:52%; top:63%;">Agent 编排</button>
+              <button class="node task" data-node="Skill执行" style="left:66.5%; top:56%;">Skill 执行</button>
+              <button class="node task" data-node="可视化输出" style="left:71.5%; top:30%;">可视化输出</button>
+              <button class="node output" data-node="工作流图" style="left:82%; top:16%;">工作流图</button>
+              <button class="node output" data-node="Prompt模板" style="left:84%; top:43%;">Prompt 模板</button>
+              <button class="node output" data-node="Skill成果" style="left:86.5%; top:66%;">Skill 成果</button>
+              <button class="node output" data-node="路演网页" style="left:85%; top:88%;">路演网页</button>
+            </div>
+            <aside class="panel network-side">
+              <h3>协作网络，而非工具清单</h3>
+              <p>悬停节点时，高亮它连接的任务和成果。正式内容只需 12 个以内节点，保持现场讲解清楚。</p>
+              <div class="tag-list">
+                <span class="tag">工具</span>
+                <span class="tag">任务</span>
+                <span class="tag">成果</span>
+                <span class="tag">关系强度</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="agent">
+        <div class="container">
+          <div class="section-kicker">Execution System</div>
+          <h2 class="section-title">Agent 编排与 Skills 搭建成果</h2>
+          <p class="section-lead">这里是最关键的创新点：把香氛行业研究方法转化为“可执行、可复用、可校验”的 AI 流程。正式版本只放 2–3 个 Skill，避免堆砌。</p>
+          <div class="agent-layout">
+            <article class="agent-card">
+              <div class="section-kicker" style="color:rgba(251,247,239,.78);">Fragrance Research Agent</div>
+              <h3>行业研究执行 Agent</h3>
+              <p>围绕香氛个护报告输入，将问题拆解、洞察提炼、可视化转译和路演材料沉淀串成一条执行链。</p>
+              <div class="agent-steps">
+                <div class="agent-step">01 · 接收赛题与报告输入</div>
+                <div class="agent-step">02 · 调用 Research Framework Skill</div>
+                <div class="agent-step">03 · 调用 Insight Extraction Skill</div>
+                <div class="agent-step">04 · 调用 Visualization Skill，并交给人工校验</div>
+              </div>
+            </article>
+            <div class="skill-grid">
+              <article class="skill-card">
+                <span class="chip">Skill 01</span>
+                <h3>Research Framework</h3>
+                <p>把赛题、报告章节和路演目标拆成可执行研究框架，输出模块标题、逻辑链和展示顺序。</p>
+              </article>
+              <article class="skill-card">
+                <span class="chip">Skill 02</span>
+                <h3>Insight Extraction</h3>
+                <p>从行业边界、消费者路径、差异化和渠道矩阵中提炼适合路演表达的关键洞察。</p>
+              </article>
+              <article class="skill-card">
+                <span class="chip">Skill 03</span>
+                <h3>Visualization</h3>
+                <p>将研究过程转译为热力图、流程图、力导向图和柱状图，服务 5 分钟现场讲解。</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="evidence">
+        <div class="container">
+          <div class="section-kicker">Proof & Demo</div>
+          <h2 class="section-title">视频、对话记录、调试与效率示意</h2>
+          <p class="section-lead">这部分不做大段展示，只作为“过程真实发生过”的证据。Prompt 只放一个方法型案例，不放去 AI 味、网页制作或普通润色 Prompt。</p>
+          <div class="evidence-grid">
+            <div class="video-shell">
+              <div>
+                <div class="play-circle" aria-hidden="true"></div>
+                <h3>AI 工作流运行视频</h3>
+                <p>占位文件：video_workflow_demo.mp4 / video_agent_skill_run.mp4。正式版本可点击播放，展示从输入任务到 Agent/Skill 输出的过程。</p>
+              </div>
+            </div>
+            <div>
+              <article class="mini-card">
+                <h3>Prompt 迭代案例</h3>
+                <p>展示“普通提问 → 结构化 Prompt”的一次代表性变化，用来证明 AI 使用方法，而不是展示所有对话。</p>
+                <div class="prompt-split">
+                  <div class="prompt-box"><strong>初版问题</strong>请帮我分析香水香氛行业。</div>
+                  <div class="prompt-box"><strong>结构化版本</strong>以决赛路演为目标，基于报告输入，按研究问题、AI 方法、输出证据和人工校验四部分生成工作流。</div>
+                </div>
+              </article>
+              <article class="mini-card">
+                <h3>调试记录卡片</h3>
+                <p>只保留一条“失败—调整—成功”的记录，例如 Skill 输出过泛后，补充输入格式和校验标准，最终生成可展示结构。</p>
+              </article>
+              <article class="mini-card">
+                <h3>效率提升柱状图</h3>
+                <p>示意估算，不作为精确数据；用于说明 AI 对研究流程结构化和可视化环节的提效。</p>
+                <div class="bars" aria-label="效率提升柱状图">
+                  <div class="bar-row"><span>研究框架</span><div class="bar-track"><div class="bar" style="width:72%"></div></div><strong>72%</strong></div>
+                  <div class="bar-row"><span>资料结构化</span><div class="bar-track"><div class="bar" style="width:64%"></div></div><strong>64%</strong></div>
+                  <div class="bar-row"><span>可视化生成</span><div class="bar-track"><div class="bar" style="width:81%"></div></div><strong>81%</strong></div>
+                  <div class="bar-row"><span>路演整合</span><div class="bar-track"><div class="bar" style="width:58%"></div></div><strong>58%</strong></div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="route">
+        <div class="container">
+          <div class="section-kicker">5-Minute Route</div>
+          <h2 class="section-title">建议现场 5 分钟讲解路径</h2>
+          <div class="route">
+            <article class="route-step"><small>00:00–00:20</small><h3>从 PPT 跳转</h3><p>说明这是 AI 工作流展示页，聚焦方法创新。</p></article>
+            <article class="route-step"><small>00:20–01:10</small><h3>热力图</h3><p>讲多工具协同，不是单一 AI 问答。</p></article>
+            <article class="route-step"><small>01:10–02:30</small><h3>流程图</h3><p>点击节点，解释 Prompt、Agent、Skill 如何串起来。</p></article>
+            <article class="route-step"><small>02:30–03:20</small><h3>力导向图</h3><p>展示工具、任务和成果的协作网络。</p></article>
+            <article class="route-step"><small>03:20–05:00</small><h3>Agent / Skill</h3><p>播放视频证据，收束到可执行、可复用、可展示。</p></article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">© 决赛路演网页架构 V0 · 香水香氛产品 · AI 工作流展示页</div>
+    </footer>
+  </div>
+
+  <script>
+    const flowNodes = document.querySelectorAll('.flow-node');
+    const detail = {
+      title: document.getElementById('detail-title'),
+      desc: document.getElementById('detail-desc'),
+      ai: document.getElementById('detail-ai'),
+      output: document.getElementById('detail-output'),
+      human: document.getElementById('detail-human')
+    };
+    flowNodes.forEach(node => {
+      node.addEventListener('click', () => {
+        flowNodes.forEach(n => n.classList.remove('active'));
+        node.classList.add('active');
+        detail.title.textContent = node.dataset.title;
+        detail.desc.textContent = node.dataset.desc;
+        detail.ai.textContent = node.dataset.ai;
+        detail.output.textContent = node.dataset.output;
+        detail.human.textContent = node.dataset.human;
+      });
+    });
+
+    const network = document.getElementById('networkCanvas');
+    const networkNodes = [...document.querySelectorAll('.node')];
+    const edges = [...document.querySelectorAll('.edge')];
+    function setNetworkFocus(name) {
+      const related = new Set([name]);
+      edges.forEach(edge => {
+        const [a, b] = edge.dataset.link.split('-');
+        if (a === name || b === name) {
+          related.add(a); related.add(b);
+          edge.classList.add('hot');
+        } else {
+          edge.classList.remove('hot');
+        }
+      });
+      networkNodes.forEach(node => {
+        const isRelated = related.has(node.dataset.node);
+        node.classList.toggle('hot', isRelated);
+        node.classList.toggle('dimmed', !isRelated);
+      });
+    }
+    function resetNetworkFocus() {
+      networkNodes.forEach(node => node.classList.remove('hot', 'dimmed'));
+      edges.forEach(edge => edge.classList.remove('hot'));
+    }
+    networkNodes.forEach(node => {
+      node.addEventListener('mouseenter', () => setNetworkFocus(node.dataset.node));
+      node.addEventListener('click', () => setNetworkFocus(node.dataset.node));
+    });
+    network.addEventListener('mouseleave', resetNetworkFocus);
+  </script>
 </body>
 </html>
