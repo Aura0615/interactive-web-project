@@ -116,7 +116,7 @@
     }
     .nav-links a:hover { color: var(--amber-dark); background: rgba(184,131,91,.10); }
 
-    section { padding: 88px 0; scroll-margin-top: 120px; }
+    section { padding: 88px 0; scroll-margin-top: 132px; }
     .section-kicker {
       color: var(--amber-dark);
       font-size: 12px;
@@ -359,7 +359,12 @@
     .insight-card h3 { margin: 8px 0 10px; font-family: var(--font-cn-serif); font-size: 18px; }
     .insight-card p { margin: 0; color: var(--cacao-soft); line-height: 1.8; font-size: 13px; }
 
-    #research-inputs { padding: 56px 0 68px; }
+    #research-inputs {
+      min-height: calc(100vh - 68px);
+      padding: 88px 0;
+      display: grid;
+      align-items: center;
+    }
     #research-inputs .section-title { font-size: clamp(26px, 3.2vw, 38px); letter-spacing: -.03em; }
     #research-inputs .section-lead { max-width: 880px; }
     #research-inputs .cards-grid { margin-top: 24px; }
@@ -579,6 +584,7 @@
     @media (max-width: 620px) {
       .container { width: min(100% - 28px, 1180px); }
       section { padding: 64px 0; }
+      #research-inputs { min-height: auto; padding: 64px 0; }
       .hero h1 { font-size: 42px; }
       .hero .english { font-size: 44px; }
       .meta-strip, .cards-grid, .flow, .prompt-split { grid-template-columns: 1fr; }
