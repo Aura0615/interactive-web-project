@@ -527,29 +527,12 @@
     .bar-track { height: 13px; border-radius: 999px; background: rgba(123,79,54,.08); overflow: hidden; }
     .bar { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--sage), var(--amber)); }
 
-    .route {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      margin-top: 28px;
-    }
-    .route-step {
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 18px;
-      background: rgba(255,255,255,.44);
-      min-height: 124px;
-    }
-    .route-step small { color: var(--gold); font-weight: 900; }
-    .route-step h3 { margin: 8px 0; font-family: var(--font-cn-serif); font-size: 17px; }
-    .route-step p { margin: 0; color: var(--cacao-soft); font-size: 12px; line-height: 1.7; }
-
     footer { padding: 44px 0 60px; color: var(--cacao-soft); font-size: 13px; text-align: center; }
 
     @media (max-width: 980px) {
       .hero-grid, .workflow-grid, .network-wrap, .agent-layout, .evidence-grid { grid-template-columns: 1fr; }
       .cards-grid { grid-template-columns: repeat(2, 1fr); }
-      .skill-grid, .route { grid-template-columns: 1fr; }
+      .skill-grid { grid-template-columns: 1fr; }
       .flow { grid-template-columns: repeat(2, 1fr); }
       .hero-card { min-height: 420px; }
       .nav { height: auto; padding: 14px 0; align-items: flex-start; }
@@ -599,7 +582,6 @@
             <p>以《中国香氛个护行业品牌发展与市场洞察报告》为输入资产，将行业研究拆解为 Prompt、Agent、Skill 与可视化输出四类工作流能力，用 5 分钟展示研究方法的创新，而不是堆叠原始数据。</p>
             <div class="hero-actions">
               <a class="btn" href="#heatmap">开始查看工作流 →</a>
-              <a class="btn secondary" href="#route">5 分钟路演动线</a>
             </div>
             <div class="meta-strip" aria-label="项目基础信息">
               <div class="meta-item"><small>报告主题</small><strong>中国香氛个护行业品牌发展与市场洞察</strong></div>
@@ -836,19 +818,6 @@
         </div>
       </section>
 
-      <section id="route">
-        <div class="container">
-          <div class="section-kicker">5-Minute Route</div>
-          <h2 class="section-title">建议现场 5 分钟讲解路径</h2>
-          <div class="route">
-            <article class="route-step"><small>00:00–00:20</small><h3>从 PPT 跳转</h3><p>说明这是 AI 工作流展示页，聚焦方法创新。</p></article>
-            <article class="route-step"><small>00:20–01:10</small><h3>热力图</h3><p>讲多工具协同，不是单一 AI 问答。</p></article>
-            <article class="route-step"><small>01:10–02:30</small><h3>流程图</h3><p>点击节点，解释 Prompt、Agent、Skill 如何串起来。</p></article>
-            <article class="route-step"><small>02:30–03:20</small><h3>力导向图</h3><p>展示工具、任务和成果的协作网络。</p></article>
-            <article class="route-step"><small>03:20–05:00</small><h3>Agent / Skill</h3><p>播放视频证据，收束到可执行、可复用、可展示。</p></article>
-          </div>
-        </div>
-      </section>
     </main>
 
     <footer>
