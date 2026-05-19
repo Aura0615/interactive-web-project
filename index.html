@@ -444,6 +444,74 @@
     .legend span { display: inline-flex; align-items: center; gap: 7px; }
     .swatch { width: 19px; height: 19px; display: inline-block; border: 1px solid rgba(123, 79, 54, .10); border-radius: 6px; }
 
+    #heatmap {
+      scroll-margin-top: 78px;
+      min-height: calc(100vh - 68px);
+      display: flex;
+      align-items: center;
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
+
+    #heatmap .section-kicker {
+      margin-bottom: 6px;
+    }
+
+    #heatmap .section-title {
+      font-size: clamp(32px, 3.6vw, 46px);
+      line-height: 1.08;
+    }
+
+    #heatmap .section-lead {
+      max-width: 980px;
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    #heatmap .panel {
+      border-radius: 28px;
+      padding: 18px;
+    }
+
+    #heatmap .heatmap-wrap {
+      margin-top: 18px;
+      padding: 18px;
+      overflow-x: auto;
+    }
+
+    #heatmap .heatmap {
+      min-width: 980px;
+      grid-template-columns: 200px repeat(6, 1fr);
+      gap: 6px;
+    }
+
+    #heatmap .heat-cell,
+    #heatmap .heat-head,
+    #heatmap .tool-name {
+      min-height: 42px;
+      padding: 8px 10px;
+      border-radius: 13px;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    #heatmap .tool-name {
+      font-size: 14px;
+    }
+
+    #heatmap .legend {
+      margin-top: 10px;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    #heatmap .swatch {
+      width: 15px;
+      height: 15px;
+      border-radius: 5px;
+    }
+
     .workflow-grid {
       display: grid;
       grid-template-columns: 1.22fr .78fr;
