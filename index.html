@@ -249,10 +249,10 @@
     .hero-card::before {
       content: "";
       position: absolute;
-      width: 360px;
-      height: 360px;
-      right: -92px;
-      top: -92px;
+      width: 390px;
+      height: 390px;
+      right: -58px;
+      top: -74px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(184, 131, 91, .34), transparent 66%);
       animation: pulse 6s ease-in-out infinite;
@@ -261,16 +261,17 @@
     .bottle {
       position: absolute;
       left: 50%;
-      top: 52%;
+      top: 53%;
       z-index: 2;
-      width: min(64%, 350px);
+      width: clamp(390px, 76%, 440px);
+      max-height: 86%;
       height: auto;
       transform: translate(-50%, -50%);
       filter:
-        saturate(.96)
+        saturate(.98)
         sepia(.08)
         hue-rotate(-6deg)
-        drop-shadow(0 34px 42px rgba(88, 55, 35, .20));
+        drop-shadow(0 38px 48px rgba(88, 55, 35, .22));
       mix-blend-mode: multiply;
       pointer-events: none;
     }
@@ -278,25 +279,50 @@
     .note-pill {
       position: absolute;
       z-index: 3;
-      padding: 12px 17px;
-      border: 1px solid rgba(255, 255, 255, .76);
+      padding: 12px 18px;
+      border: 1px solid rgba(255, 255, 255, .82);
       border-radius: 999px;
       color: var(--cacao-soft);
-      background: rgba(255, 255, 255, .54);
-      box-shadow: 0 14px 34px rgba(78, 50, 32, .12);
-      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, .62);
+      box-shadow: 0 16px 38px rgba(78, 50, 32, .13);
+      backdrop-filter: blur(18px);
       font-size: 15px;
+      font-weight: 700;
       line-height: 1;
       white-space: nowrap;
       animation: float 6s ease-in-out infinite;
       transition: all .28s var(--ease);
     }
 
-    .note-pill:hover { transform: translateY(-4px); background: rgba(255, 255, 255, .72); box-shadow: 0 18px 42px rgba(78, 50, 32, .16); }
-    .note-top { top: 82px; left: 32px; animation-delay: 0s; }
-    .note-heart { top: 72px; right: 34px; animation-delay: -1.2s; }
-    .note-base { right: 26px; bottom: 168px; animation-delay: -2.4s; }
-    .note-final { left: 34px; bottom: 74px; animation-delay: -3.6s; }
+    .note-pill:hover {
+      transform: translateY(-4px) scale(1.03);
+      background: rgba(255, 255, 255, .78);
+      box-shadow: 0 20px 46px rgba(78, 50, 32, .17);
+    }
+
+    .note-top {
+      top: 108px;
+      left: 70px;
+      animation-delay: 0s;
+    }
+
+    .note-heart {
+      top: 94px;
+      right: 76px;
+      animation-delay: -1.2s;
+    }
+
+    .note-base {
+      right: 74px;
+      bottom: 154px;
+      animation-delay: -2.4s;
+    }
+
+    .note-final {
+      left: 78px;
+      bottom: 108px;
+      animation-delay: -3.6s;
+    }
 
     @keyframes pulse { 0%, 100% { transform: scale(.95); opacity: .75; } 50% { transform: scale(1.08); opacity: 1; } }
     @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
@@ -819,67 +845,281 @@
       margin-top: 28px;
     }
 
+    #network {
+      scroll-margin-top: 118px;
+    }
+
     .network {
       position: relative;
-      min-height: 620px;
+      min-height: 640px;
       border: 1px solid var(--border);
-      border-radius: 34px;
+      border-radius: 36px;
       background:
-        linear-gradient(90deg, rgba(123,79,54,.055) 0 20%, transparent 20% 40%, rgba(123,79,54,.04) 40% 60%, transparent 60% 80%, rgba(86,99,68,.055) 80%),
-        radial-gradient(circle at 50% 54%, rgba(255, 255, 255, .44), transparent 36%),
-        rgba(255, 255, 255, .43);
+        radial-gradient(circle at 57% 57%, rgba(255,255,255,.58), transparent 31%),
+        radial-gradient(circle at 15% 47%, rgba(184,131,91,.10), transparent 24%),
+        radial-gradient(circle at 83% 48%, rgba(135,148,110,.10), transparent 25%),
+        linear-gradient(90deg, rgba(123,79,54,.035), transparent 24%, transparent 76%, rgba(86,99,68,.035)),
+        rgba(255,255,255,.48);
+      box-shadow: var(--shadow-card);
       overflow: hidden;
     }
 
-    .network-lane {
+    .network::before {
+      content: "";
       position: absolute;
-      top: 18px;
-      transform: translateX(-50%);
-      color: rgba(123, 79, 54, .72);
+      inset: 22px;
+      border-radius: 30px;
+      border: 1px solid rgba(123,79,54,.08);
+      pointer-events: none;
+    }
+
+    .network-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .network-map-label {
+      position: absolute;
+      z-index: 2;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.66);
+      border-radius: 999px;
+      background: rgba(255,255,255,.52);
+      color: rgba(123,79,54,.72);
+      box-shadow: 0 8px 18px rgba(78,50,32,.06);
       font-size: 12px;
       font-weight: 900;
-      letter-spacing: .16em;
-      text-transform: uppercase;
+      letter-spacing: .08em;
     }
 
-    .network svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .label-main {
+      left: 30px;
+      top: 26px;
+    }
+
+    .label-return {
+      right: 32px;
+      bottom: 24px;
+      color: rgba(86,99,68,.76);
+    }
+
+    .flow-ribbon {
+      display: none;
+    }
+
+    .path-guide {
+      fill: none;
+      stroke-linecap: round;
+      stroke-width: 8;
+      opacity: .07;
+      transition: opacity .25s var(--ease), stroke-width .25s var(--ease);
+    }
+
+    .main-guide {
+      stroke: rgba(184,131,91,.62);
+    }
+
+    .return-guide {
+      stroke: rgba(86,99,68,.62);
+      stroke-dasharray: 13 12;
+    }
+
     .edge {
       fill: none;
-      stroke: rgba(123, 79, 54, .30);
-      stroke-width: 2;
+      stroke: rgba(123,79,54,.24);
+      stroke-width: 1.7;
+      stroke-linecap: round;
       marker-end: url(#arrow);
-      transition: all .25s var(--ease);
+      opacity: .45;
+      transition:
+        stroke .25s var(--ease),
+        stroke-width .25s var(--ease),
+        opacity .25s var(--ease),
+        filter .25s var(--ease);
     }
 
-    .edge.return { stroke-dasharray: 9 8; stroke: rgba(86, 99, 68, .48); }
-    .edge.contextual { opacity: 0; marker-end: none; }
-    .edge.contextual.hot { opacity: 1; marker-end: url(#arrow); }
-    .edge.hot { stroke: rgba(123, 79, 54, .86); stroke-width: 3.1; }
+    .edge.return {
+      stroke: rgba(86,99,68,.38);
+      stroke-width: 1.7;
+      stroke-dasharray: 7 8;
+      marker-end: url(#returnArrow);
+    }
+
+    .edge.hot {
+      opacity: 1;
+      stroke: rgba(123,79,54,.76);
+      stroke-width: 2.4;
+      filter: drop-shadow(0 3px 5px rgba(123,79,54,.12));
+    }
+
+    .edge.return.hot {
+      stroke: rgba(86,99,68,.82);
+      stroke-width: 2.5;
+      stroke-dasharray: 7 7;
+      animation: dashFlow 2.2s linear infinite;
+    }
+
+    .edge.path-muted {
+      opacity: .08;
+    }
+
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -28; }
+    }
+
+    .network.show-main .main-guide,
+    .network.show-both .main-guide {
+      opacity: .13;
+      stroke-width: 10;
+    }
+
+    .network.show-return .return-guide,
+    .network.show-both .return-guide {
+      opacity: .14;
+      stroke-width: 10;
+    }
 
     .node {
       position: absolute;
+      z-index: 3;
       transform: translate(-50%, -50%);
-      padding: 12px 15px;
-      border: 1px solid rgba(255, 255, 255, .72);
+      min-width: 118px;
+      display: grid;
+      gap: 3px;
+      place-items: center;
+      padding: 12px 16px 11px;
+      border: 1px solid rgba(255,255,255,.76);
       border-radius: 999px;
       color: var(--cacao);
-      background: rgba(255, 255, 255, .68);
-      box-shadow: 0 13px 30px rgba(78, 50, 32, .11);
-      font-size: 15px;
-      font-weight: 800;
-      line-height: 1;
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 12px 28px rgba(78,50,32,.10);
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      font-weight: 900;
+      line-height: 1.08;
       white-space: nowrap;
       cursor: pointer;
-      transition: all .25s var(--ease);
+      transition:
+        transform .25s var(--ease),
+        opacity .25s var(--ease),
+        filter .25s var(--ease),
+        box-shadow .25s var(--ease),
+        border-color .25s var(--ease),
+        background .25s var(--ease);
     }
 
-    .node.human { color: var(--ivory); background: rgba(123, 79, 54, .86); }
-    .node.ai { color: var(--ivory); background: rgba(184, 131, 91, .82); }
-    .node.agent { color: var(--ivory); background: rgba(135, 148, 110, .80); }
-    .node.output { color: var(--cacao); background: rgba(184, 155, 99, .75); }
-    .node.review { color: var(--ivory); background: rgba(86, 99, 68, .86); }
-    .node.dimmed { opacity: .28; filter: grayscale(.5); }
-    .node.hot { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 18px 42px rgba(78, 50, 32, .18); }
+    .node small {
+      display: block;
+      color: rgba(110,90,74,.72);
+      font-size: 10.5px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .node-step {
+      position: absolute;
+      left: -7px;
+      top: -7px;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.74);
+      border-radius: 50%;
+      color: var(--ivory);
+      background: rgba(123,79,54,.68);
+      box-shadow: 0 7px 14px rgba(78,50,32,.12);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .node.wide {
+      min-width: 176px;
+    }
+
+    .node.hub {
+      min-width: 138px;
+      padding: 15px 19px 14px;
+      border-color: rgba(184,131,91,.48);
+      background: linear-gradient(145deg, rgba(255,255,255,.90), rgba(236,221,198,.74));
+      box-shadow:
+        0 16px 36px rgba(78,50,32,.14),
+        0 0 0 6px rgba(184,131,91,.07);
+    }
+
+    .node.human {
+      color: var(--ivory);
+      background: rgba(123,79,54,.88);
+    }
+
+    .node.human small {
+      color: rgba(251,247,239,.74);
+    }
+
+    .node.ai {
+      color: var(--ivory);
+      background: rgba(184,131,91,.84);
+    }
+
+    .node.ai small {
+      color: rgba(251,247,239,.72);
+    }
+
+    .node.agent {
+      color: var(--ivory);
+      background: rgba(135,148,110,.86);
+    }
+
+    .node.agent small {
+      color: rgba(251,247,239,.72);
+    }
+
+    .node.output {
+      color: var(--cacao);
+      background: rgba(184,155,99,.78);
+    }
+
+    .node.review {
+      color: var(--ivory);
+      background: rgba(86,99,68,.88);
+    }
+
+    .node.review small {
+      color: rgba(251,247,239,.72);
+    }
+
+    .node.hot {
+      transform: translate(-50%, -50%) scale(1.06);
+      opacity: 1;
+      box-shadow: 0 17px 38px rgba(78,50,32,.17);
+    }
+
+    .node.current {
+      transform: translate(-50%, -50%) scale(1.12);
+      z-index: 5;
+      border-color: rgba(255,255,255,.92);
+      box-shadow:
+        0 20px 46px rgba(78,50,32,.20),
+        0 0 0 6px rgba(184,131,91,.12);
+    }
+
+    .node.dimmed {
+      opacity: .28;
+      filter: grayscale(.32) saturate(.72);
+    }
+
+    .node:focus-visible {
+      outline: 3px solid rgba(184,131,91,.32);
+      outline-offset: 5px;
+    }
+
+    .network-side {
+      min-height: 640px;
+    }
 
     .network-side h3,
     .mini-card h3 {
@@ -895,6 +1135,42 @@
       color: var(--cacao-soft);
       font-size: 16px;
       line-height: 1.75;
+    }
+
+    .network-logic-cards {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .network-logic-cards div {
+      padding: 14px 15px;
+      border: 1px solid rgba(123,79,54,.11);
+      border-radius: 18px;
+      background: rgba(255,255,255,.44);
+    }
+
+    .network-logic-cards small {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--amber-dark);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .14em;
+    }
+
+    .network-logic-cards strong {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--font-cn-serif);
+      font-size: 18px;
+    }
+
+    .network-logic-cards span {
+      display: block;
+      color: var(--cacao-soft);
+      font-size: 13px;
+      line-height: 1.55;
     }
 
     .tag-list {
@@ -1521,12 +1797,48 @@
       .hero { padding-top: 52px; }
       .hero-card { min-height: 520px; }
       .hero .title-main { white-space: normal; }
-      .bottle { width: min(82%, 320px); }
-      .note-top { top: 102px; left: 22px; }
-      .note-heart { top: 66px; right: 22px; }
-      .note-base { right: 18px; bottom: 158px; }
-      .note-final { left: 22px; bottom: 68px; }
+      .bottle {
+        width: min(92%, 370px);
+        max-height: 82%;
+        top: 53%;
+      }
+      .note-top { top: 106px; left: 34px; }
+      .note-heart { top: 76px; right: 34px; }
+      .note-base { right: 34px; bottom: 146px; }
+      .note-final { left: 34px; bottom: 84px; }
       .note-pill { font-size: 13px; }
+      .network {
+        min-height: 760px;
+      }
+      .network-map-label {
+        display: none;
+      }
+      .node {
+        min-width: 112px;
+        padding: 11px 14px 10px;
+        font-size: 13px;
+      }
+      .node small {
+        font-size: 10px;
+      }
+      .node.wide {
+        min-width: 164px;
+      }
+      .node-step {
+        width: 21px;
+        height: 21px;
+        font-size: 11px;
+      }
+      #networkCanvas .node[data-node="人工研究判断"],
+      #networkCanvas .node[data-node="人工校验"] {
+        left: 16% !important;
+      }
+      #networkCanvas .node[data-node="结构化输出"] {
+        left: 83% !important;
+      }
+      #networkCanvas .node[data-node="可视化成果"] {
+        left: 82% !important;
+      }
       .cards-grid,
       .flow,
       .skill-grid,
@@ -1804,47 +2116,121 @@
           <p class="section-lead">人类治理、模型拆解、Skill 封装、Agent 执行、成果回流</p>
           <div class="network-wrap">
             <div class="network" id="networkCanvas" aria-label="工具任务成果协作网络图">
-              <div class="network-lane" style="left:10%;">Govern</div>
-              <div class="network-lane" style="left:30%;">Plan</div>
-              <div class="network-lane" style="left:50%;">Package</div>
-              <div class="network-lane" style="left:70%;">Execute</div>
-              <div class="network-lane" style="left:90%;">Review</div>
-              <svg viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">
+              <div class="network-map-label label-main">主链路：任务分发</div>
+              <div class="network-map-label label-return">回流链路：结果校验</div>
+
+              <svg class="network-svg" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">
                 <defs>
                   <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(123,79,54,.48)"></path>
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(123,79,54,.52)"></path>
+                  </marker>
+                  <marker id="returnArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(86,99,68,.66)"></path>
                   </marker>
                 </defs>
-                <path class="edge" data-source="人工研究判断" data-target="ChatGPT" d="M110 148 C190 136, 230 128, 300 126"></path>
-                <path class="edge" data-source="人工研究判断" data-target="DeepSeek" d="M110 148 C188 202, 226 242, 300 284"></path>
-                <path class="edge" data-source="ChatGPT" data-target="维度拆解" d="M300 126 C362 128, 398 142, 468 168"></path>
-                <path class="edge" data-source="DeepSeek" data-target="维度拆解" d="M300 284 C366 262, 408 222, 468 168"></path>
-                <path class="edge" data-source="维度拆解" data-target="Skill封装" d="M468 168 C492 244, 502 300, 500 360"></path>
-                <path class="edge" data-source="Codex" data-target="Skill封装" d="M315 458 C386 448, 440 408, 500 360"></path>
-                <path class="edge" data-source="Skill封装" data-target="OpenClaw" d="M500 360 C565 386, 622 414, 685 450"></path>
-                <path class="edge" data-source="Skill封装" data-target="阿里云百炼 / JVS Claw" d="M500 360 C574 310, 632 276, 704 254"></path>
-                <path class="edge" data-source="OpenClaw" data-target="结构化输出" d="M685 450 C752 430, 804 394, 872 350"></path>
-                <path class="edge" data-source="阿里云百炼 / JVS Claw" data-target="结构化输出" d="M704 254 C764 274, 812 310, 872 350"></path>
-                <path class="edge" data-source="结构化输出" data-target="可视化成果" d="M872 350 C888 294, 890 250, 884 205"></path>
-                <path class="edge return" data-source="结构化输出" data-target="ChatGPT" d="M872 350 C708 210, 520 142, 300 126"></path>
-                <path class="edge return contextual" data-source="ChatGPT" data-target="人工校验" data-focus="结构化输出" d="M300 126 C220 210, 168 342, 135 502"></path>
-                <path class="edge return" data-source="人工校验" data-target="人工研究判断" d="M135 502 C90 394, 78 252, 110 148"></path>
+
+                <path class="path-guide main-guide" data-path="main" d="M145 292 C245 245, 360 245, 455 296 S640 376, 760 338 S850 340, 900 348"></path>
+                <path class="path-guide return-guide" data-path="return" d="M900 348 C790 178, 520 118, 315 190 S170 390, 150 500"></path>
+
+                <path class="edge main-edge" data-path="main" data-source="人工研究判断" data-target="ChatGPT" d="M145 292 C205 220, 252 198, 315 190"></path>
+                <path class="edge main-edge" data-path="main" data-source="人工研究判断" data-target="DeepSeek" d="M145 292 C205 326, 250 350, 315 350"></path>
+                <path class="edge main-edge" data-path="main" data-source="ChatGPT" data-target="维度拆解" d="M315 190 C380 198, 430 226, 470 260"></path>
+                <path class="edge main-edge" data-path="main" data-source="DeepSeek" data-target="维度拆解" d="M315 350 C380 340, 430 306, 470 260"></path>
+                <path class="edge main-edge" data-path="main" data-source="维度拆解" data-target="Skill封装" d="M470 260 C520 292, 548 332, 570 382"></path>
+                <path class="edge main-edge" data-path="main" data-source="Codex" data-target="Skill封装" d="M430 468 C490 455, 535 422, 570 382"></path>
+                <path class="edge main-edge" data-path="main" data-source="Skill封装" data-target="阿里云百炼 / JVS Claw" d="M570 382 C630 330, 690 308, 760 322"></path>
+                <path class="edge main-edge" data-path="main" data-source="Skill封装" data-target="OpenClaw" d="M570 382 C632 438, 692 458, 760 438"></path>
+                <path class="edge main-edge" data-path="main" data-source="阿里云百炼 / JVS Claw" data-target="结构化输出" d="M760 322 C815 322, 860 334, 900 348"></path>
+                <path class="edge main-edge" data-path="main" data-source="OpenClaw" data-target="结构化输出" d="M760 438 C820 428, 865 390, 900 348"></path>
+                <path class="edge main-edge" data-path="main" data-source="结构化输出" data-target="可视化成果" d="M900 348 C918 292, 902 244, 865 210"></path>
+
+                <path class="edge return return-edge" data-path="return" data-source="结构化输出" data-target="ChatGPT" d="M900 348 C780 160, 520 105, 315 190"></path>
+                <path class="edge return return-edge" data-path="return" data-source="可视化成果" data-target="ChatGPT" d="M865 210 C700 108, 500 104, 315 190"></path>
+                <path class="edge return return-edge" data-path="return" data-source="ChatGPT" data-target="人工校验" d="M315 190 C205 275, 160 390, 150 500"></path>
+                <path class="edge return return-edge" data-path="return" data-source="人工校验" data-target="人工研究判断" d="M150 500 C116 430, 118 350, 145 292"></path>
               </svg>
-              <button class="node human" data-node="人工研究判断" style="left:11%; top:23%;">人工研究判断</button>
-              <button class="node review" data-node="人工校验" style="left:13.5%; top:78.5%;">人工校验</button>
-              <button class="node ai" data-node="ChatGPT" style="left:30%; top:19.5%;">ChatGPT</button>
-              <button class="node ai" data-node="DeepSeek" style="left:30%; top:44.5%;">DeepSeek</button>
-              <button class="node ai" data-node="Codex" style="left:31.5%; top:71.5%;">Codex</button>
-              <button class="node output" data-node="维度拆解" style="left:46.8%; top:26.5%;">维度拆解</button>
-              <button class="node output" data-node="Skill封装" style="left:50%; top:56.5%;">Skill 封装</button>
-              <button class="node agent" data-node="阿里云百炼 / JVS Claw" style="left:70.4%; top:39.8%;">阿里云百炼 / JVS Claw</button>
-              <button class="node agent" data-node="OpenClaw" style="left:68.5%; top:70.5%;">OpenClaw</button>
-              <button class="node output" data-node="可视化成果" style="left:88.4%; top:32%;">可视化成果</button>
-              <button class="node output" data-node="结构化输出" style="left:87.2%; top:54.8%;">结构化输出</button>
+
+              <button class="node human" data-node="人工研究判断" style="left:14.5%; top:45.5%;">
+                <span class="node-step">01</span>
+                人工研究判断
+                <small>定方向</small>
+              </button>
+
+              <button class="node ai" data-node="ChatGPT" style="left:31.5%; top:29.5%;">
+                <span class="node-step">02</span>
+                ChatGPT
+                <small>拆解 / 总结</small>
+              </button>
+
+              <button class="node ai" data-node="DeepSeek" style="left:31.5%; top:54.5%;">
+                <span class="node-step">02</span>
+                DeepSeek
+                <small>辅助拆解</small>
+              </button>
+
+              <button class="node output" data-node="维度拆解" style="left:47%; top:40.5%;">
+                <span class="node-step">03</span>
+                维度拆解
+                <small>任务地图</small>
+              </button>
+
+              <button class="node ai" data-node="Codex" style="left:43%; top:73%;">
+                <span class="node-step">04</span>
+                Codex
+                <small>代码封装</small>
+              </button>
+
+              <button class="node output hub" data-node="Skill封装" style="left:57%; top:60%;">
+                <span class="node-step">05</span>
+                Skill 封装
+                <small>规则枢纽</small>
+              </button>
+
+              <button class="node agent wide" data-node="阿里云百炼 / JVS Claw" style="left:76%; top:50%;">
+                <span class="node-step">06</span>
+                阿里云百炼 / JVS Claw
+                <small>执行任务</small>
+              </button>
+
+              <button class="node agent" data-node="OpenClaw" style="left:76%; top:70%;">
+                <span class="node-step">06</span>
+                OpenClaw
+                <small>执行任务</small>
+              </button>
+
+              <button class="node output" data-node="结构化输出" style="left:90%; top:58%;">
+                <span class="node-step">07</span>
+                结构化输出
+                <small>结果材料</small>
+              </button>
+
+              <button class="node output" data-node="可视化成果" style="left:86.5%; top:32.5%;">
+                <span class="node-step">08</span>
+                可视化成果
+                <small>路演展示</small>
+              </button>
+
+              <button class="node review" data-node="人工校验" style="left:15%; top:78%;">
+                <span class="node-step">09</span>
+                人工校验
+                <small>审查取舍</small>
+              </button>
             </div>
             <aside class="panel network-side">
-              <h3>从左到右读主链路，从右到左读回流链路</h3>
-              <p>人先定方向，GPT / DeepSeek 做拆解，GPT + Codex 形成 Skill，OpenClaw 与阿里云百炼 / JVS Claw 执行。右侧输出不会直接等于结论，而是回到 GPT 总结与人工校验中。</p>
+              <h3 id="networkSideTitle">从左到右读主链路，从右到左读回流链路</h3>
+              <p id="networkSideDesc">人先定方向，GPT / DeepSeek 做拆解，GPT + Codex 形成 Skill，OpenClaw 与阿里云百炼 / JVS Claw 执行。右侧输出不会直接等于结论，而是回到 GPT 总结与人工校验中。</p>
+              <div class="network-logic-cards">
+                <div>
+                  <small>MAIN PATH</small>
+                  <strong>任务分发</strong>
+                  <span>人类判断 → 模型拆解 → Skill 封装 → Agent 执行 → 输出成果</span>
+                </div>
+                <div>
+                  <small>RETURN PATH</small>
+                  <strong>结果回流</strong>
+                  <span>结构化输出 → GPT 总结 → 人工校验 → 下一轮修正</span>
+                </div>
+              </div>
               <div class="tag-list">
                 <span class="tag">实线：任务分发</span>
                 <span class="tag">虚线：结果回流</span>
@@ -2079,39 +2465,124 @@
     });
 
     const network = document.getElementById('networkCanvas');
-    const networkNodes = [...document.querySelectorAll('.node')];
-    const edges = [...document.querySelectorAll('.edge')];
-    const networkFocusExtras = {
-      '人工校验': ['结构化输出', '可视化成果'],
-      '可视化成果': ['人工校验']
+    const networkNodes = [...document.querySelectorAll('#networkCanvas .node')];
+    const edges = [...document.querySelectorAll('#networkCanvas .edge')];
+    const networkSideTitle = document.getElementById('networkSideTitle');
+    const networkSideDesc = document.getElementById('networkSideDesc');
+
+    const defaultNetworkCopy = {
+      title: '从左到右读主链路，从右到左读回流链路',
+      desc: '人先定方向，GPT / DeepSeek 做拆解，GPT + Codex 形成 Skill，OpenClaw 与阿里云百炼 / JVS Claw 执行。右侧输出不会直接等于结论，而是回到 GPT 总结与人工校验中。'
+    };
+
+    const mainPathNodes = new Set([
+      '人工研究判断',
+      'ChatGPT',
+      'DeepSeek',
+      '维度拆解',
+      'Codex',
+      'Skill封装',
+      '阿里云百炼 / JVS Claw',
+      'OpenClaw',
+      '结构化输出',
+      '可视化成果'
+    ]);
+
+    const returnPathNodes = new Set([
+      '结构化输出',
+      '可视化成果',
+      'ChatGPT',
+      '人工校验',
+      '人工研究判断'
+    ]);
+
+    const nodePathMode = {
+      '人工研究判断': 'both',
+      'ChatGPT': 'both',
+      'DeepSeek': 'main',
+      'Codex': 'main',
+      '维度拆解': 'main',
+      'Skill封装': 'main',
+      '阿里云百炼 / JVS Claw': 'main',
+      'OpenClaw': 'main',
+      '结构化输出': 'return',
+      '可视化成果': 'return',
+      '人工校验': 'return'
+    };
+
+    const networkCopy = {
+      main: {
+        title: '当前高亮：主链路 / 任务分发',
+        desc: '这条链路从左到右推进：人先定方向，GPT / DeepSeek 拆解任务，Codex 和 Skill 将规则固化，OpenClaw 与阿里云百炼完成执行，最后形成结构化输出与可视化成果。'
+      },
+      return: {
+        title: '当前高亮：回流链路 / 结果校验',
+        desc: '这条链路从右到左回流：结构化输出和可视化成果不直接进入最终结论，而是回到 GPT 总结与人工校验中，再决定修改、重跑或进入展示。'
+      },
+      both: {
+        title: '当前高亮：完整闭环 / 分发 + 回流',
+        desc: '这个节点同时连接任务分发与结果回流，体现“人管 AI，AI 管下一层 AI，输出再回到人工判断”的闭环机制。'
+      }
     };
 
     function setNetworkFocus(name) {
-      const related = new Set([name]);
-      edges.forEach(edge => {
-        const a = edge.dataset.source;
-        const b = edge.dataset.target;
-        const focus = edge.dataset.focus;
-        const isFocusedEdge = focus ? focus === name : (a === name || b === name);
-        if (isFocusedEdge) {
-          related.add(a);
-          related.add(b);
-          edge.classList.add('hot');
-        } else {
-          edge.classList.remove('hot');
-        }
-      });
-      (networkFocusExtras[name] || []).forEach(extra => related.add(extra));
+      const mode = nodePathMode[name] || 'main';
+      const activeNodes = new Set();
+
+      if (mode === 'main') {
+        mainPathNodes.forEach(node => activeNodes.add(node));
+      }
+
+      if (mode === 'return') {
+        returnPathNodes.forEach(node => activeNodes.add(node));
+      }
+
+      if (mode === 'both') {
+        mainPathNodes.forEach(node => activeNodes.add(node));
+        returnPathNodes.forEach(node => activeNodes.add(node));
+      }
+
+      activeNodes.add(name);
+
       networkNodes.forEach(node => {
-        const isRelated = related.has(node.dataset.node);
-        node.classList.toggle('hot', isRelated);
-        node.classList.toggle('dimmed', !isRelated);
+        const isActive = activeNodes.has(node.dataset.node);
+        const isCurrent = node.dataset.node === name;
+
+        node.classList.toggle('hot', isActive);
+        node.classList.toggle('dimmed', !isActive);
+        node.classList.toggle('current', isCurrent);
       });
+
+      edges.forEach(edge => {
+        const path = edge.dataset.path;
+        const shouldHighlight =
+          mode === 'both'
+            ? (path === 'main' || path === 'return')
+            : path === mode;
+
+        edge.classList.toggle('hot', shouldHighlight);
+        edge.classList.toggle('path-muted', !shouldHighlight);
+      });
+
+      network.classList.toggle('show-main', mode === 'main');
+      network.classList.toggle('show-return', mode === 'return');
+      network.classList.toggle('show-both', mode === 'both');
+
+      if (networkSideTitle && networkSideDesc) {
+        networkSideTitle.textContent = networkCopy[mode].title;
+        networkSideDesc.textContent = networkCopy[mode].desc;
+      }
     }
 
     function resetNetworkFocus() {
-      networkNodes.forEach(node => node.classList.remove('hot', 'dimmed'));
-      edges.forEach(edge => edge.classList.remove('hot'));
+      networkNodes.forEach(node => node.classList.remove('hot', 'dimmed', 'current'));
+      edges.forEach(edge => edge.classList.remove('hot', 'path-muted'));
+      network.classList.remove('show-main', 'show-return', 'show-both');
+
+      if (networkSideTitle && networkSideDesc) {
+        networkSideTitle.textContent = defaultNetworkCopy.title;
+        networkSideDesc.textContent = defaultNetworkCopy.desc;
+      }
     }
 
     networkNodes.forEach(node => {
@@ -2120,7 +2591,7 @@
       node.addEventListener('click', () => setNetworkFocus(node.dataset.node));
     });
 
-    network.addEventListener('mouseleave', resetNetworkFocus);
+    network?.addEventListener('mouseleave', resetNetworkFocus);
 
     const loopDetails = {
       human: {
