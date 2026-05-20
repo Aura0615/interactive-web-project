@@ -128,7 +128,83 @@
 
     .nav-links a:hover { color: var(--amber-dark); background: rgba(184, 131, 91, .10); }
 
-    section { padding: 74px 0; scroll-margin-top: 96px; }
+    .story-rail {
+      --story-progress: 0%;
+      position: relative;
+      border-top: 1px solid rgba(123,79,54,.08);
+      background: rgba(251,247,239,.66);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .story-rail::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: var(--story-progress);
+      height: 2px;
+      background: linear-gradient(90deg, rgba(123,79,54,.72), rgba(184,131,91,.58), rgba(135,148,110,.62));
+      transition: width .35s var(--ease);
+    }
+
+    .story-rail-inner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 5px 0 7px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .story-rail-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .story-rail-label {
+      flex: 0 0 auto;
+      color: rgba(123,79,54,.64);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .13em;
+    }
+
+    .story-rail a {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 11px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--cacao-soft);
+      background: rgba(255,255,255,.28);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      transition: color .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease), transform .22s var(--ease);
+    }
+
+    .story-rail a:hover,
+    .story-rail a.active {
+      color: var(--amber-dark);
+      background: rgba(255,255,255,.72);
+      border-color: rgba(123,79,54,.16);
+      transform: translateY(-1px);
+    }
+
+    .nav-links a.active {
+      color: var(--amber-dark);
+      background: rgba(184,131,91,.13);
+    }
+
+    section { padding: 74px 0; scroll-margin-top: 132px; }
+
+    section .container {
+      transition: opacity .45s var(--ease), transform .45s var(--ease);
+    }
+
     .section-kicker {
       margin-bottom: 10px;
       color: var(--amber-dark);
@@ -153,6 +229,113 @@
       color: var(--cacao-soft);
       font-size: 18px;
       line-height: 1.82;
+    }
+
+    .module-context {
+      width: fit-content;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 10px 13px;
+      border: 1px solid rgba(123,79,54,.12);
+      border-radius: 999px;
+      background: rgba(255,255,255,.42);
+      box-shadow: 0 12px 28px rgba(78,50,32,.07);
+    }
+
+    .module-context span {
+      flex: 0 0 auto;
+      color: var(--amber-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+    .module-context strong {
+      color: var(--cacao-soft);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .module-bridge {
+      width: min(520px, 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 30px auto 0;
+      padding: 13px 16px;
+      border: 1px solid rgba(123,79,54,.12);
+      border-radius: 999px;
+      color: var(--cacao-soft);
+      background: linear-gradient(145deg, rgba(255,255,255,.56), rgba(255,255,255,.30));
+      box-shadow: 0 14px 32px rgba(78,50,32,.08);
+      text-decoration: none;
+      transition: transform .24s var(--ease), background .24s var(--ease), border-color .24s var(--ease), box-shadow .24s var(--ease);
+    }
+
+    .module-bridge span {
+      flex: 0 0 auto;
+      color: var(--amber-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+    .module-bridge strong {
+      flex: 1;
+      color: var(--cacao);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .module-bridge i {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--ivory);
+      background: var(--amber-dark);
+      font-style: normal;
+      font-weight: 900;
+    }
+
+    .module-bridge:hover {
+      transform: translateY(-3px);
+      border-color: rgba(123,79,54,.22);
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 18px 42px rgba(78,50,32,.12);
+    }
+
+    section.is-current-section .section-kicker {
+      position: relative;
+    }
+
+    section.is-current-section .section-kicker::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--amber-dark);
+      box-shadow: 0 0 0 6px rgba(184,131,91,.12);
+      vertical-align: middle;
+    }
+
+    section:not(.is-current-section) .module-context,
+    section:not(.is-current-section) .module-bridge {
+      opacity: .72;
+    }
+
+    section.is-current-section .module-context,
+    section.is-current-section .module-bridge {
+      opacity: 1;
     }
 
     .hero {
@@ -1793,7 +1976,33 @@
       .container { width: min(100% - 28px, 1180px); }
       .nav { align-items: flex-start; flex-direction: column; }
       .nav-links { justify-content: flex-start; }
+      .story-rail-inner {
+        gap: 6px;
+        padding: 5px 0 7px;
+      }
+      .story-rail-label {
+        display: none;
+      }
+      .story-rail a {
+        padding: 7px 10px;
+        font-size: 11px;
+      }
       section { padding: 56px 0; }
+      .module-context {
+        width: 100%;
+        align-items: flex-start;
+        border-radius: 18px;
+      }
+      .module-context span {
+        padding-top: 2px;
+      }
+      .module-bridge {
+        border-radius: 22px;
+        align-items: flex-start;
+      }
+      .module-bridge strong {
+        font-size: 13px;
+      }
       .hero { padding-top: 52px; }
       .hero-card { min-height: 520px; }
       .hero .title-main { white-space: normal; }
@@ -1900,8 +2109,22 @@
           <a href="#workflow">循环流程</a>
           <a href="#agent">Skill 系统</a>
           <a href="#evidence">调试记录</a>
+          <a href="#value">方法价值</a>
         </div>
       </nav>
+      <div class="story-rail" id="storyRail" aria-label="页面阅读路径">
+        <div class="container story-rail-inner">
+          <span class="story-rail-label">阅读路径</span>
+          <a href="#loop" data-story-target="loop">01 闭环逻辑</a>
+          <a href="#network" data-story-target="network">02 协作关系</a>
+          <a href="#overview" data-story-target="overview">03 过程概览</a>
+          <a href="#heatmap" data-story-target="heatmap">04 工具分工</a>
+          <a href="#workflow" data-story-target="workflow">05 循环流程</a>
+          <a href="#agent" data-story-target="agent">06 Skill 系统</a>
+          <a href="#evidence" data-story-target="evidence">07 调试记录</a>
+          <a href="#value" data-story-target="value">08 方法价值</a>
+        </div>
+      </div>
     </header>
 
     <main id="top">
@@ -2434,6 +2657,176 @@
       insertionPoint.after(section);
       insertionPoint = section;
     });
+
+    const moduleContext = [
+      {
+        id: 'loop',
+        question: '为什么它不是线性流程，而是可回流的治理闭环？',
+        next: '继续看人、模型、Skill、Agent 如何协作',
+        nextHref: '#network'
+      },
+      {
+        id: 'network',
+        question: '人、模型、Skill、Agent 和成果之间如何协作？',
+        next: '继续看完整执行过程的五个阶段',
+        nextHref: '#overview'
+      },
+      {
+        id: 'overview',
+        question: '完整研究流程由哪几个关键阶段组成？',
+        next: '继续看不同工具在各阶段怎么分工',
+        nextHref: '#heatmap'
+      },
+      {
+        id: 'heatmap',
+        question: 'ChatGPT、Codex、Agent 和人工校验分别负责什么？',
+        next: '继续看一个研究任务如何循环执行',
+        nextHref: '#workflow'
+      },
+      {
+        id: 'workflow',
+        question: '一个研究任务如何被拆解、执行、回流和审查？',
+        next: '继续看 Skill 如何落到 Agent 执行系统',
+        nextHref: '#agent'
+      },
+      {
+        id: 'agent',
+        question: '这些方法如何被封装成可调用的 Skill / Agent？',
+        next: '继续看调试记录和运行证据',
+        nextHref: '#evidence'
+      },
+      {
+        id: 'evidence',
+        question: '如何证明这不是一次性生成，而是经过调试和校验？',
+        next: '继续看这套方法最终带来的价值',
+        nextHref: '#value'
+      },
+      {
+        id: 'value',
+        question: '这套工作流最终解决了什么问题？',
+        next: '回到页面顶部',
+        nextHref: '#top'
+      }
+    ];
+
+    function injectModuleContext() {
+      moduleContext.forEach(item => {
+        const section = document.getElementById(item.id);
+        if (!section) return;
+
+        const container = section.querySelector('.container');
+        if (!container || container.querySelector('.module-context')) return;
+
+        const lead = container.querySelector('.section-lead');
+
+        const context = document.createElement('div');
+        context.className = 'module-context';
+        context.innerHTML = `
+          <span>本模块回答</span>
+          <strong>${item.question}</strong>
+        `;
+
+        if (lead) {
+          lead.insertAdjacentElement('afterend', context);
+        }
+
+        const bridge = document.createElement('a');
+        bridge.className = 'module-bridge';
+        bridge.href = item.nextHref;
+        bridge.innerHTML = `
+          <span>下一步</span>
+          <strong>${item.next}</strong>
+          <i aria-hidden="true">→</i>
+        `;
+
+        container.appendChild(bridge);
+      });
+    }
+
+    injectModuleContext();
+
+    const storyOrder = ['loop', 'network', 'overview', 'heatmap', 'workflow', 'agent', 'evidence', 'value'];
+    const storyRail = document.getElementById('storyRail');
+    const storyLinks = [...document.querySelectorAll('[data-story-target]')];
+    const navLinks = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+    const storySections = storyOrder
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+
+    function setActiveStorySection(id) {
+      const index = Math.max(0, storyOrder.indexOf(id));
+      const progress = storyOrder.length <= 1 ? 100 : (index / (storyOrder.length - 1)) * 100;
+
+      if (storyRail) {
+        storyRail.style.setProperty('--story-progress', `${progress}%`);
+      }
+
+      storyLinks.forEach(link => {
+        link.classList.toggle('active', link.dataset.storyTarget === id);
+      });
+
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        link.classList.toggle('active', href === `#${id}`);
+      });
+
+      storySections.forEach(section => {
+        section.classList.toggle('is-current-section', section.id === id);
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      const storyObserver = new IntersectionObserver(entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible?.target?.id) {
+          setActiveStorySection(visible.target.id);
+        }
+      }, {
+        root: null,
+        threshold: [0.18, 0.32, 0.48],
+        rootMargin: '-34% 0px -46% 0px'
+      });
+
+      storySections.forEach(section => storyObserver.observe(section));
+    }
+
+    let storyScrollTicking = false;
+    function updateActiveStoryFromScroll() {
+      const marker = window.innerHeight * .45;
+      const containing = storySections.find(section => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= marker && rect.bottom >= marker;
+      });
+      const closest = containing || storySections
+        .map(section => ({
+          section,
+          distance: Math.abs(section.getBoundingClientRect().top - marker)
+        }))
+        .sort((a, b) => a.distance - b.distance)[0]?.section;
+
+      if (closest?.id) {
+        setActiveStorySection(closest.id);
+      }
+    }
+
+    function requestStoryScrollUpdate() {
+      if (storyScrollTicking) return;
+      storyScrollTicking = true;
+      requestAnimationFrame(() => {
+        updateActiveStoryFromScroll();
+        storyScrollTicking = false;
+      });
+    }
+
+    window.addEventListener('scroll', requestStoryScrollUpdate, { passive: true });
+    window.addEventListener('hashchange', () => {
+      setTimeout(updateActiveStoryFromScroll, 120);
+    });
+
+    setActiveStorySection('loop');
 
     const stageCards = document.querySelectorAll('#stageCards .insight-card');
     stageCards.forEach(card => {
