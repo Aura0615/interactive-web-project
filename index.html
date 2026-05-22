@@ -57,6 +57,20 @@
     .page { position: relative; z-index: 1; }
     .container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
 
+    .credit-bar {
+      position: relative;
+      z-index: 21;
+      padding: 7px 0 6px;
+      color: rgba(110, 90, 74, .78);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.45;
+      text-align: center;
+      letter-spacing: .02em;
+      background: rgba(251, 247, 239, .62);
+      border-bottom: 1px solid rgba(123, 79, 54, .10);
+    }
+
     header {
       --nav-progress: 0%;
       position: sticky;
@@ -660,7 +674,7 @@
 
     .loop-module {
       display: grid;
-      grid-template-columns: .94fr 1.06fr;
+      grid-template-columns: 1.16fr .84fr;
       gap: 26px;
       align-items: center;
       margin-top: 34px;
@@ -718,22 +732,22 @@
 
     .loop-mini-flow {
       display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr;
+      grid-template-columns: minmax(132px, 2fr) 18px minmax(0, 2.3fr) 18px minmax(0, 2fr);
       align-items: stretch;
-      gap: 10px;
+      gap: 8px;
     }
 
     .loop-mini-flow div {
-      min-height: 86px;
-      padding: 13px 14px;
-      border-radius: 20px;
+      min-height: 66px;
+      padding: 9px 13px;
+      border-radius: 16px;
       background: rgba(255,255,255,.11);
       border: 1px solid rgba(255,255,255,.14);
     }
 
     .loop-mini-flow small {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       color: rgba(251,247,239,.62);
       font-size: 12px;
       font-weight: 900;
@@ -741,15 +755,15 @@
 
     .loop-mini-flow strong {
       color: rgba(251,247,239,.92);
-      font-size: 14px;
-      line-height: 1.45;
+      font-size: 12.5px;
+      line-height: 1.34;
     }
 
     .loop-mini-flow > span {
       display: grid;
       place-items: center;
       color: rgba(251,247,239,.55);
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 900;
     }
 
@@ -1932,6 +1946,11 @@
 
     @media (max-width: 720px) {
       .container { width: min(100% - 28px, 1180px); }
+      .credit-bar {
+        padding: 6px 16px 5px;
+        font-size: 11px;
+        letter-spacing: 0;
+      }
       .nav {
         min-height: auto;
         align-items: flex-start;
@@ -2063,6 +2082,7 @@
 </head>
 <body>
   <div class="page">
+    <div class="credit-bar">制作：早八点煎饼队 队员：周雨瑶 余家铮 涂茗茗 尚茗萱</div>
     <header>
       <nav class="container nav" aria-label="页面导航">
         <a class="brand" href="#top">
@@ -2445,7 +2465,7 @@
             <div class="skill-grid">
               <article class="skill-card" data-modal-type="skill" data-title="Source Structuring" data-kicker="Skill 01" data-path="./skills/source_structuring.yaml"><span class="chip">Skill 01</span><h3>Source Structuring</h3><p><strong>资料整理 Skill</strong>接收行业资料、公开报告、人工搜索材料和已有数据，将分散资料按八个研究维度归类，提取有效信息、来源线索和可用章节。</p></article>
               <article class="skill-card" data-modal-type="skill" data-title="Research Execution" data-kicker="Skill 02" data-path="./skills/research_execution.yaml"><span class="chip">Skill 02</span><h3>Research Execution</h3><p><strong>研究分析 Skill</strong>基于已整理资料，围绕行业定义、行业分类、PEST、用户画像、价格体系、差异化、痛点需求和渠道矩阵等维度，生成结构化分析和章节初稿。</p></article>
-              <article class="skill-card" data-modal-type="skill" data-title="Visualization Translation" data-kicker="Skill 03" data-path="./skills/visualization_translation.yaml"><span class="chip">Skill 03</span><h3>Visualization Translation</h3><p><strong>可视化转译 Skill</strong>将研究过程和分析结论转化为热力图、流程图、力导向图、闭环图和路演网页中的可视化表达，服务 5 分钟现场讲解。</p></article>
+              <article class="skill-card" data-modal-type="skill" data-title="Visualization Translation" data-kicker="Skill 03" data-path="./skills/visualization_translation.yaml"><span class="chip">Skill 03</span><h3>Visualization Translation</h3><p><strong>可视化转译 Skill</strong>将研究过程和分析结论转化为柱状图，折线图等可视化图表形式数据，让结论更加清晰直观</p></article>
               <article class="skill-card" data-modal-type="skill" data-title="Quality Check" data-kicker="Skill 04" data-path="./skills/quality_check.yaml"><span class="chip">Skill 04</span><h3>Quality Check</h3><p><strong>质量检查 Skill</strong>检查 AI 输出是否存在空话、逻辑跳跃、来源不明、工具堆砌或缺少人工判断，并给出修改建议，确保最终结果能够进入 GPT 总结和人工审查环节。</p></article>
             </div>
           </div>
@@ -3299,13 +3319,13 @@ outputs:
       './skills/visualization_translation.yaml': `name: visualization_translation
 version: 0.1-placeholder
 path: ./skills/visualization_translation.yaml
-purpose: 将研究过程和分析结论转化为路演可视化素材
+purpose: 将研究过程和分析结论转化为柱状图、折线图等可视化图表形式数据，让结论更加清晰直观
 inputs:
   - key_insights: 核心洞察
   - workflow_steps: 工作流节点
   - presentation_goal: 路演展示目标
 process:
-  - select_visual_form: 选择热力图、流程图、力导向图或闭环图
+  - select_visual_form: 选择柱状图、折线图等可视化图表形式
   - simplify_text: 压缩为适合网页展示的短句
   - generate_visual_brief: 生成可视化设计说明
 validation:
